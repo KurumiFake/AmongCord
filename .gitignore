@@ -1,0 +1,11 @@
+AmongCord-Proxy
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+.project
+.settings
