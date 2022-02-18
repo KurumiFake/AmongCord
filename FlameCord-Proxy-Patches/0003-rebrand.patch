@@ -1,4 +1,4 @@
-From 4a9c1e16c1f04e35b363d447bb7a12d42aa36533 Mon Sep 17 00:00:00 2001
+From 58623cda463cd9a82de878c294f62f80d12342d3 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:49:12 +0000
 Subject: [PATCH] rebrand
@@ -18,7 +18,7 @@ index dd3b56a6..832e8001 100644
  
      public void reloadMessages()
 diff --git a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
-index aeda7963..67dc29a2 100644
+index aeda7963..3d4c6604 100644
 --- a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
 +++ b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
 @@ -17,6 +17,7 @@ public class CommandBungee extends Command
@@ -27,7 +27,7 @@ index aeda7963..67dc29a2 100644
          // FlameCord - Use custom version message
 -        sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', "&eThis server is running &c" + ProxyServer.getInstance().getName() + "&e version &a" + ProxyServer.getInstance().getVersion() + "&e by &bLinsaFTW & Sammwy&e." ) );
 +        // AmongCord - nop no fanci colors xD
-+        sender.sendMessage( Running " + ProxyServer.getInstance().getName() + " version " + ProxyServer.getInstance().getVersion() + " by KurumiFake" );
++        sender.sendMessage("Running " + ProxyServer.getInstance().getName() + " version " + ProxyServer.getInstance().getVersion() + " by KurumiFake");
      }
  }
 diff --git a/query/src/main/java/net/md_5/bungee/query/QueryHandler.java b/query/src/main/java/net/md_5/bungee/query/QueryHandler.java
