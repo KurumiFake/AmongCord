@@ -1,4 +1,4 @@
-From dfa78ffc7453f6b868976bb21adbc52b5986334f Mon Sep 17 00:00:00 2001
+From dc6508d479228d5e2185d3d2369aa2737d7d022d Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -83,7 +83,7 @@ index 45f14084..43870b97 100644
          <maven.compiler.target>1.8</maven.compiler.target>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 diff --git a/proxy/pom.xml b/proxy/pom.xml
-index 3df0498a..04459516 100644
+index 3df0498a..d413a80c 100644
 --- a/proxy/pom.xml
 +++ b/proxy/pom.xml
 @@ -109,7 +109,7 @@
@@ -104,21 +104,6 @@ index 3df0498a..04459516 100644
              <scope>compile</scope>
          </dependency>
          <dependency>
-@@ -195,6 +195,14 @@
-             <scope>compile</scope>
-         </dependency>
-         <!-- FlameCord end -->
-+        <!-- AmongCord start - add sqlite if you smh need it -->
-+        <dependency>
-+            <groupId>org.xerial</groupId>
-+            <artifactId>sqlite-jdbc</artifactId>
-+            <version>3.36.0.3</version>
-+            <scope>runtime</scope>
-+        </dependency>
-+        <!-- AmongCord end -->
-     </dependencies>
- 
-     <build>
 -- 
 2.20.1
 
