@@ -68,7 +68,6 @@ popd
 basedir=$(dirname "$basedir")
 
 # Apply flamecord patches
-basedir=$basedir/FlameCord
 pushd FlameCord
 applyPatch Waterfall/Waterfall-Proxy FlameCord-Proxy HEAD
 popd

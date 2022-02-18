@@ -1,0 +1,71 @@
+From df68d0a7032eaff84e0b0f6a7b6a8e8b3d643102 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 18 Feb 2022 05:43:36 +0000
+Subject: [PATCH] rename refs
+
+
+diff --git a/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java b/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java
+index 9838f5c5..a4e6ad09 100644
+--- a/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java
++++ b/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java
+@@ -7,7 +7,7 @@ public class Bootstrap
+     {
+         if ( Float.parseFloat( System.getProperty( "java.class.version" ) ) < 52.0 )
+         {
+-            System.err.println( "*** ERROR *** FlameCord requires Java 8 or above to function! Please download and install it!" );
++            System.err.println( "*** ERROR *** AmongCord requires Java 8 or above to function! Please download and install it!" );
+             System.out.println( "You can check your Java version with the command: java -version" );
+             return;
+         }
+diff --git a/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java b/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java
+index 49dce84b..89898144 100644
+--- a/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java
++++ b/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java
+@@ -12,7 +12,7 @@ public class LogDispatcher extends Thread
+ 
+     public LogDispatcher(BungeeLogger logger)
+     {
+-        super( "FlameCord Logger Thread" );
++        super( "AmongCord Logger Thread" );
+         this.logger = logger;
+     }
+ 
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 23cb8839..dd3b56a6 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer
+     public BungeeCord() throws IOException
+     {
+         // Java uses ! to indicate a resource inside of a jar/zip/other container. Running Bungee from within a directory that has a ! will cause this to muck up.
+-        Preconditions.checkState( new File( "." ).getAbsolutePath().indexOf( '!' ) == -1, "Cannot use FlameCord in directory with ! in path." );
++        Preconditions.checkState( new File( "." ).getAbsolutePath().indexOf( '!' ) == -1, "Cannot use AmongCord in directory with ! in path." );
+ 
+         try
+         {
+@@ -570,7 +570,7 @@ public class BungeeCord extends ProxyServer
+     @Override
+     public String getName()
+     {
+-        return "FlameCord";
++        return "AmongCord";
+     }
+ 
+     @Override
+diff --git a/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java b/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java
+index 5ab4db18..144ad77d 100644
+--- a/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java
++++ b/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java
+@@ -23,7 +23,7 @@ public class CommandReload extends Command
+         BungeeCord.getInstance().startListeners();
+         BungeeCord.getInstance().getPluginManager().callEvent( new ProxyReloadEvent( sender ) );
+ 
+-        sender.sendMessage( ChatColor.BOLD.toString() + ChatColor.RED.toString() + "FlameCord has been reloaded."
+-                + " This is NOT advisable and you will not be supported with any issues that arise! Please restart FlameCord ASAP." );
++        sender.sendMessage( ChatColor.BOLD.toString() + ChatColor.RED.toString() + "AmongCord has been reloaded."
++                + " This is NOT advisable and you will not be supported with any issues that arise! Please restart AmongCord ASAP." );
+     }
+ }
+-- 
+2.20.1
+

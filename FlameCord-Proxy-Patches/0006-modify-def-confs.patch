@@ -1,0 +1,45 @@
+From b4935c37e5f11ecb38a73b8e9fb0aadb5a2d0817 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 18 Feb 2022 06:42:28 +0000
+Subject: [PATCH] modify def confs
+
+err...
+
+diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+index d320fa94..ff3334e3 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
++++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+@@ -50,7 +50,7 @@ public class FlameCordConfiguration {
+     @Getter
+     private int firewallSeconds = 60;
+     @Getter
+-    private Collection<String> firewallNames = new HashSet<>(Arrays.asList(new String[] { "mcspam","mcbot","mcstorm","dropbot","theresabot" }));
++    private Collection<String> firewallNames = new HashSet<>(Arrays.asList(new String[] { "mcspam","mcbot","mcstorm","dropbot","theresabot","mcdown" }));
+ 
+     public FlameCordConfiguration(final ConfigurationProvider configurationProvider) {
+         try {
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index ae4c7ac2..f55a3b5c 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -114,7 +114,7 @@ public class YamlConfig implements ConfigurationAdapter
+         Map<String, Object> groups = get( "groups", null );
+         if ( groups == null )
+         {
+-            set( "groups.md_5", Collections.singletonList( "admin" ) );
++            set( "groups.md_5", Collections.singletonList( "default" ) ); // AmongCord
+         }
+     }
+ 
+@@ -249,7 +249,7 @@ public class YamlConfig implements ConfigurationAdapter
+             new HashMap()
+         } ) );
+         Map<String, String> forcedDef = new HashMap<>();
+-        forcedDef.put( "pvp.md-5.net", "pvp" );
++        forcedDef.put( "among.sus", "sus" ); // AmongCord
+ 
+         Collection<ListenerInfo> ret = new HashSet<>();
+ 
+-- 
+2.20.1
+
