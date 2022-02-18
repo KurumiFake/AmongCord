@@ -1,4 +1,4 @@
-From 916de6db4f9543bdbcdfeb4553d72d6494c221eb Mon Sep 17 00:00:00 2001
+From 8ef3e3d103e70bcdc5cd0503a24d0e7df0a6aa3f Mon Sep 17 00:00:00 2001
 From: Vtroxi <39201813+vtroxi@users.noreply.github.com>
 Date: Thu, 20 May 2021 11:34:22 +0200
 Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
@@ -19,10 +19,10 @@ index 469fe0e1..37dd21e8 100644
       * Time before users are disconnected due to no network activity.
       *
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 5e670c46..87353f70 100644
+index e8eb555c..1fc5c8e7 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -356,6 +356,8 @@ public final class UserConnection implements ProxiedPlayer
+@@ -357,6 +357,8 @@ public final class UserConnection implements ProxiedPlayer
          };
          ChannelFutureListener listener = new ChannelFutureListener()
          {
@@ -31,7 +31,7 @@ index 5e670c46..87353f70 100644
              @Override
              @SuppressWarnings("ThrowableResultIgnored")
              public void operationComplete(ChannelFuture future) throws Exception
-@@ -370,17 +372,29 @@ public final class UserConnection implements ProxiedPlayer
+@@ -371,17 +373,29 @@ public final class UserConnection implements ProxiedPlayer
                      future.channel().close();
                      pendingConnects.remove( target );
  
@@ -69,7 +69,7 @@ index 5e670c46..87353f70 100644
                      }
                  }
              }
-@@ -391,6 +405,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -392,6 +406,7 @@ public final class UserConnection implements ProxiedPlayer
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
                  .remoteAddress( target.getAddress() );
