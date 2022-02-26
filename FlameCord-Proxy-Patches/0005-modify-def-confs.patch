@@ -1,4 +1,4 @@
-From 37d6e1350ff60c9fb0c471dab3e8a1a082f1563b Mon Sep 17 00:00:00 2001
+From dcba1fe7bf1d10862a394a5edca027d80e0c9c4a Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 06:42:28 +0000
 Subject: [PATCH] modify def confs
@@ -6,10 +6,10 @@ Subject: [PATCH] modify def confs
 err...
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-index d320fa94..ff3334e3 100644
+index d0fb0de2..b88250db 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-@@ -50,7 +50,7 @@ public class FlameCordConfiguration {
+@@ -54,7 +54,7 @@ public class FlameCordConfiguration {
      @Getter
      private int firewallSeconds = 60;
      @Getter
@@ -41,5 +41,5 @@ index ae4c7ac2..f55a3b5c 100644
          Collection<ListenerInfo> ret = new HashSet<>();
  
 -- 
-2.20.1
+2.35.1
 
