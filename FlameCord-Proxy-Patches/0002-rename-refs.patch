@@ -1,9 +1,22 @@
-From df68d0a7032eaff84e0b0f6a7b6a8e8b3d643102 Mon Sep 17 00:00:00 2001
+From be1537e735389ddd60f22fa2267611e902bb346e Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:43:36 +0000
 Subject: [PATCH] rename refs
 
 
+diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
+index cbd16c34..3a64a84a 100644
+--- a/bootstrap/pom.xml
++++ b/bootstrap/pom.xml
+@@ -37,7 +37,7 @@
+     </dependencies>
+ 
+     <build>
+-        <finalName>FlameCord</finalName>
++        <finalName>AmongCord</finalName>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
 diff --git a/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java b/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java
 index 9838f5c5..a4e6ad09 100644
 --- a/bootstrap/src/main/java/net/md_5/bungee/Bootstrap.java
@@ -31,7 +44,7 @@ index 49dce84b..89898144 100644
      }
  
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 23cb8839..dd3b56a6 100644
+index 64d2b05f..78d00749 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer
@@ -67,5 +80,5 @@ index 5ab4db18..144ad77d 100644
      }
  }
 -- 
-2.20.1
+2.35.1
 

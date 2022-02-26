@@ -1,4 +1,4 @@
-From 8ef3e3d103e70bcdc5cd0503a24d0e7df0a6aa3f Mon Sep 17 00:00:00 2001
+From dc800a146b7a2fb3fc72499b063b63a717e3a78d Mon Sep 17 00:00:00 2001
 From: Vtroxi <39201813+vtroxi@users.noreply.github.com>
 Date: Thu, 20 May 2021 11:34:22 +0200
 Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
@@ -19,7 +19,7 @@ index 469fe0e1..37dd21e8 100644
       * Time before users are disconnected due to no network activity.
       *
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index e8eb555c..1fc5c8e7 100644
+index e8eb555c..8c509143 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -357,6 +357,8 @@ public final class UserConnection implements ProxiedPlayer
@@ -55,14 +55,14 @@ index e8eb555c..1fc5c8e7 100644
 +                        ServerInfo def = updateAndGetNextServer( target );
 +                        if ( request.isRetry() && def != null && ( getServer() == null || def != getServer().getInfo() ) )
 +                        {
-+                            sendMessage( bungee.getTranslation( "fallback_lobby" ) );
-+                            connect( def, null, true, ServerConnectEvent.Reason.LOBBY_FALLBACK );
++                            if (request.isSendFeedback()) sendMessage( bungee.getTranslation( "fallback_lobby" ) ); // Waterfall
++                            connect( def, null, true, ServerConnectEvent.Reason.LOBBY_FALLBACK, request.getConnectTimeout(), request.isSendFeedback() ); // Waterfall
 +                        } else if ( dimensionChange )
 +                        {
 +                            disconnect( bungee.getTranslation( "fallback_kick", future.cause().getClass().getName() ) );
 +                        } else
 +                        {
-+                            sendMessage( bungee.getTranslation( "fallback_kick", future.cause().getClass().getName() ) );
++                            if (request.isSendFeedback()) sendMessage( bungee.getTranslation( "fallback_kick", connectionFailMessage( future.cause() ) ) );
 +
 +                            sendMessage( "§cCause: " + future.cause().getMessage() + " | " + future.cause().toString() );
 +                        }
@@ -120,5 +120,5 @@ index 3b5ce41e..7fec9756 100644
      @Deprecated
      public String getFavicon()
 -- 
-2.20.1
+2.35.1
 

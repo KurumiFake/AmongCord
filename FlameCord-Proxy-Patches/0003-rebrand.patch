@@ -1,11 +1,11 @@
-From 6e1f2e2c40ec53fcacdfe2d7d22e9935f1267170 Mon Sep 17 00:00:00 2001
+From 96489661d4d7147353d2a1f4d44fed0dec07e8cd Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:49:12 +0000
 Subject: [PATCH] rebrand
 
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 78d00749..832e8001 100644
+index 78d00749..82b19985 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -576,7 +576,7 @@ public class BungeeCord extends ProxyServer
@@ -13,7 +13,7 @@ index 78d00749..832e8001 100644
      public String getVersion()
      {
 -        return "0.7.2";
-+        return "0.0.1";
++        return "0.0.2";
      }
  
      public void reloadMessages()

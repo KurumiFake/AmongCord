@@ -1,4 +1,4 @@
-From dc6508d479228d5e2185d3d2369aa2737d7d022d Mon Sep 17 00:00:00 2001
+From 6c4da52f0e781700bcf43b89f6b60e66cf288f48 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -17,19 +17,6 @@ index 379b6023..3baf662f 100644
          </dependency>
      </dependencies>
  </project>
-diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
-index cbd16c34..3a64a84a 100644
---- a/bootstrap/pom.xml
-+++ b/bootstrap/pom.xml
-@@ -37,7 +37,7 @@
-     </dependencies>
- 
-     <build>
--        <finalName>FlameCord</finalName>
-+        <finalName>AmongCord</finalName>
-         <plugins>
-             <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
 diff --git a/chat/pom.xml b/chat/pom.xml
 index 0ad5dd16..8bac44cf 100644
 --- a/chat/pom.xml
@@ -105,5 +92,5 @@ index 3df0498a..d413a80c 100644
          </dependency>
          <dependency>
 -- 
-2.20.1
+2.35.1
 

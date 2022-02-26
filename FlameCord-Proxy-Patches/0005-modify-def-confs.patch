@@ -1,4 +1,4 @@
-From dcba1fe7bf1d10862a394a5edca027d80e0c9c4a Mon Sep 17 00:00:00 2001
+From d4b5b3817e39a7163883ca8a60906b3dc47918e3 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 06:42:28 +0000
 Subject: [PATCH] modify def confs
@@ -19,7 +19,7 @@ index d0fb0de2..b88250db 100644
      public FlameCordConfiguration(final ConfigurationProvider configurationProvider) {
          try {
 diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
-index ae4c7ac2..f55a3b5c 100644
+index ae4c7ac2..adfa874b 100644
 --- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 +++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 @@ -114,7 +114,7 @@ public class YamlConfig implements ConfigurationAdapter
@@ -30,15 +30,6 @@ index ae4c7ac2..f55a3b5c 100644
 +            set( "groups.md_5", Collections.singletonList( "default" ) ); // AmongCord
          }
      }
- 
-@@ -249,7 +249,7 @@ public class YamlConfig implements ConfigurationAdapter
-             new HashMap()
-         } ) );
-         Map<String, String> forcedDef = new HashMap<>();
--        forcedDef.put( "pvp.md-5.net", "pvp" );
-+        forcedDef.put( "among.sus", "sus" ); // AmongCord
- 
-         Collection<ListenerInfo> ret = new HashSet<>();
  
 -- 
 2.35.1
