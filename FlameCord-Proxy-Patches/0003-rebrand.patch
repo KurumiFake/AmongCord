@@ -1,19 +1,19 @@
-From 8b3bbff25a9120a122d5d420582482e7e8b500f1 Mon Sep 17 00:00:00 2001
+From a72136f6b2545b9caf1462a1e1b2819d529c184a Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:49:12 +0000
 Subject: [PATCH] rebrand
 
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 331d25bd..cc947c30 100644
+index 8faa0cbc..a6444971 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -576,7 +576,7 @@ public class BungeeCord extends ProxyServer
      @Override
      public String getVersion()
      {
--        return "0.7.5";
-+        return "0.0.3";
+-        return "0.7.6";
++        return "0.0.4";
      }
  
      public void reloadMessages()
@@ -45,5 +45,5 @@ index b1ecb7ef..cbe24c87 100644
                      listener.getHost().getHostString(), "MINECRAFT",  players, bungee.getGameVersion()));
              QueryResult result = bungee.getPluginManager().callEvent(event).getResult();
 -- 
-2.20.1
+2.25.1
 
