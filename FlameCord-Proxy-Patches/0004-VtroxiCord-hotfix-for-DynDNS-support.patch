@@ -1,4 +1,4 @@
-From dc800a146b7a2fb3fc72499b063b63a717e3a78d Mon Sep 17 00:00:00 2001
+From 96cee8e7111e2c997d8f1a1c2ac13bb6b098efe3 Mon Sep 17 00:00:00 2001
 From: Vtroxi <39201813+vtroxi@users.noreply.github.com>
 Date: Thu, 20 May 2021 11:34:22 +0200
 Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
@@ -6,7 +6,7 @@ Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
 Original code by vtroxi, can be found at https://github.com/vtroxi/BungeeCord
 
 diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
-index 469fe0e1..37dd21e8 100644
+index 97bd384b..abcf06bb 100644
 --- a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
 +++ b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
 @@ -14,6 +14,8 @@ import net.md_5.bungee.api.config.ServerInfo;
@@ -19,10 +19,10 @@ index 469fe0e1..37dd21e8 100644
       * Time before users are disconnected due to no network activity.
       *
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index e8eb555c..8c509143 100644
+index 723b004a..3f227cc3 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -357,6 +357,8 @@ public final class UserConnection implements ProxiedPlayer
+@@ -352,6 +352,8 @@ public final class UserConnection implements ProxiedPlayer
          };
          ChannelFutureListener listener = new ChannelFutureListener()
          {
@@ -31,7 +31,7 @@ index e8eb555c..8c509143 100644
              @Override
              @SuppressWarnings("ThrowableResultIgnored")
              public void operationComplete(ChannelFuture future) throws Exception
-@@ -371,17 +373,29 @@ public final class UserConnection implements ProxiedPlayer
+@@ -366,17 +368,29 @@ public final class UserConnection implements ProxiedPlayer
                      future.channel().close();
                      pendingConnects.remove( target );
  
@@ -69,7 +69,7 @@ index e8eb555c..8c509143 100644
                      }
                  }
              }
-@@ -392,6 +406,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -387,6 +401,7 @@ public final class UserConnection implements ProxiedPlayer
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
                  .remoteAddress( target.getAddress() );
@@ -120,5 +120,5 @@ index 3b5ce41e..7fec9756 100644
      @Deprecated
      public String getFavicon()
 -- 
-2.35.1
+2.23.0
 
