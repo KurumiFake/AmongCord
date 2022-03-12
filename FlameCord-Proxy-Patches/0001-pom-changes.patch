@@ -1,4 +1,4 @@
-From 6c4da52f0e781700bcf43b89f6b60e66cf288f48 Mon Sep 17 00:00:00 2001
+From 796939fafa5e1a18b65695a323b450798cfa1ba2 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -56,8 +56,21 @@ index 465ebbf2..d1975b50 100644
              <scope>compile</scope>
          </dependency>
          <dependency>
+diff --git a/log4j/pom.xml b/log4j/pom.xml
+index 127d0c14..24a5f780 100644
+--- a/log4j/pom.xml
++++ b/log4j/pom.xml
+@@ -18,7 +18,7 @@
+     <description>Simplistic and performant Log4j2 based logger and console API designed for use with Waterfall and Minecraft related applications.</description>
+ 
+     <properties>
+-        <log4j2.version>2.17.1</log4j2.version>
++        <log4j2.version>2.17.2</log4j2.version>
+     </properties>
+ 
+     <dependencies>
 diff --git a/pom.xml b/pom.xml
-index 45f14084..43870b97 100644
+index 45f14084..b6430352 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -90,7 +90,7 @@
@@ -65,7 +78,7 @@ index 45f14084..43870b97 100644
          <build.number>unknown</build.number>
          <lombok.version>1.18.22</lombok.version>
 -        <netty.version>4.1.72.Final</netty.version>
-+        <netty.version>4.1.73.Final</netty.version>
++        <netty.version>4.1.74.Final</netty.version>
          <maven.compiler.source>1.8</maven.compiler.source>
          <maven.compiler.target>1.8</maven.compiler.target>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

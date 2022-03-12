@@ -1,14 +1,21 @@
-From 00add9e90072e4bfb1b2220ec7e2db64e8652bcb Mon Sep 17 00:00:00 2001
+From d7411b1718c908d2264d44d8a58be1f42c245de6 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:49:12 +0000
 Subject: [PATCH] rebrand
 
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
-index aeda7963..d9def7b4 100644
+index aeda7963..3805e6c0 100644
 --- a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
 +++ b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
-@@ -16,7 +16,6 @@ public class CommandBungee extends Command
+@@ -1,6 +1,5 @@
+ package net.md_5.bungee.command;
+ 
+-import net.md_5.bungee.api.ChatColor;
+ import net.md_5.bungee.api.CommandSender;
+ import net.md_5.bungee.api.ProxyServer;
+ import net.md_5.bungee.api.plugin.Command;
+@@ -16,7 +15,6 @@ public class CommandBungee extends Command
      @Override
      public void execute(CommandSender sender, String[] args)
      {
@@ -32,5 +39,5 @@ index b1ecb7ef..cbe24c87 100644
                      listener.getHost().getHostString(), "MINECRAFT",  players, bungee.getGameVersion()));
              QueryResult result = bungee.getPluginManager().callEvent(event).getResult();
 -- 
-2.23.0
+2.35.1
 
