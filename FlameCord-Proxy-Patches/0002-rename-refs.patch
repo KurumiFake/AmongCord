@@ -1,4 +1,4 @@
-From be1537e735389ddd60f22fa2267611e902bb346e Mon Sep 17 00:00:00 2001
+From 423d93a920e200b6231ad1eaa38e256008f211af Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:43:36 +0000
 Subject: [PATCH] rename refs
@@ -44,7 +44,7 @@ index 49dce84b..89898144 100644
      }
  
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 64d2b05f..78d00749 100644
+index 3759b06f..5192d308 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer
@@ -56,7 +56,7 @@ index 64d2b05f..78d00749 100644
  
          try
          {
-@@ -570,7 +570,7 @@ public class BungeeCord extends ProxyServer
+@@ -567,7 +567,7 @@ public class BungeeCord extends ProxyServer
      @Override
      public String getName()
      {
@@ -80,5 +80,5 @@ index 5ab4db18..144ad77d 100644
      }
  }
 -- 
-2.35.1
+2.30.2
 

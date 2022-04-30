@@ -1,4 +1,4 @@
-From 96cee8e7111e2c997d8f1a1c2ac13bb6b098efe3 Mon Sep 17 00:00:00 2001
+From 71f8a3197e5c104aa20474e3e97dade290693ac5 Mon Sep 17 00:00:00 2001
 From: Vtroxi <39201813+vtroxi@users.noreply.github.com>
 Date: Thu, 20 May 2021 11:34:22 +0200
 Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
@@ -19,10 +19,10 @@ index 97bd384b..abcf06bb 100644
       * Time before users are disconnected due to no network activity.
       *
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 723b004a..3f227cc3 100644
+index 6131d7ea..ce84f5b6 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -352,6 +352,8 @@ public final class UserConnection implements ProxiedPlayer
+@@ -353,6 +353,8 @@ public final class UserConnection implements ProxiedPlayer
          };
          ChannelFutureListener listener = new ChannelFutureListener()
          {
@@ -31,7 +31,7 @@ index 723b004a..3f227cc3 100644
              @Override
              @SuppressWarnings("ThrowableResultIgnored")
              public void operationComplete(ChannelFuture future) throws Exception
-@@ -366,17 +368,29 @@ public final class UserConnection implements ProxiedPlayer
+@@ -367,17 +369,29 @@ public final class UserConnection implements ProxiedPlayer
                      future.channel().close();
                      pendingConnects.remove( target );
  
@@ -69,7 +69,7 @@ index 723b004a..3f227cc3 100644
                      }
                  }
              }
-@@ -387,6 +401,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -388,6 +402,7 @@ public final class UserConnection implements ProxiedPlayer
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
                  .remoteAddress( target.getAddress() );
@@ -120,5 +120,5 @@ index 3b5ce41e..7fec9756 100644
      @Deprecated
      public String getFavicon()
 -- 
-2.23.0
+2.30.2
 
