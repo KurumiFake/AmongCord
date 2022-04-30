@@ -1,4 +1,4 @@
-From 796939fafa5e1a18b65695a323b450798cfa1ba2 Mon Sep 17 00:00:00 2001
+From 79200e3743295a8b2f2305ccf0db8e970b14dc90 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -17,8 +17,49 @@ index 379b6023..3baf662f 100644
          </dependency>
      </dependencies>
  </project>
+diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
+index cbd16c34..65c0444b 100644
+--- a/bootstrap/pom.xml
++++ b/bootstrap/pom.xml
+@@ -42,7 +42,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+-                <version>3.2.0</version>
++                <version>3.2.2</version>
+                 <configuration>
+                     <archive>
+                         <manifestEntries>
+@@ -59,7 +59,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-shade-plugin</artifactId>
+-                <version>3.2.3</version>
++                <version>3.3.0</version>
+                 <executions>
+                     <execution>
+                         <phase>package</phase>
+@@ -80,14 +80,14 @@
+                         </filter>
+                     </filters>
+                     <transformers>
+-                        <transformer implementation="com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer.PluginsCacheFileTransformer" />
++                        <transformer implementation="io.github.edwgiz.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer">
+                     </transformers>
+                 </configuration>
+                 <dependencies>
+                     <dependency>
+-                        <groupId>com.github.edwgiz</groupId>
+-                        <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
+-                        <version>2.13.2</version>
++                        <groupId>io.github.edwgiz</groupId>
++                        <artifactId>log4j-maven-shade-plugin-extensions</artifactId>
++                        <version>2.17.2</version>
+                     </dependency>
+                 </dependencies>
+             </plugin>
 diff --git a/chat/pom.xml b/chat/pom.xml
-index 0ad5dd16..8bac44cf 100644
+index 0ad5dd16..e4b35b36 100644
 --- a/chat/pom.xml
 +++ b/chat/pom.xml
 @@ -22,7 +22,7 @@
@@ -26,12 +67,12 @@ index 0ad5dd16..8bac44cf 100644
              <groupId>com.google.code.gson</groupId>
              <artifactId>gson</artifactId>
 -            <version>2.8.8</version>
-+            <version>2.8.9</version>
++            <version>2.9.0</version>
              <scope>compile</scope>
          </dependency>
      </dependencies>
 diff --git a/config/pom.xml b/config/pom.xml
-index 7d32ea69..f8e6c0ef 100644
+index 7d32ea69..d78ce78b 100644
 --- a/config/pom.xml
 +++ b/config/pom.xml
 @@ -22,7 +22,7 @@
@@ -39,7 +80,7 @@ index 7d32ea69..f8e6c0ef 100644
              <groupId>com.google.code.gson</groupId>
              <artifactId>gson</artifactId>
 -            <version>2.8.8</version>
-+            <version>2.8.9</version>
++            <version>2.9.0</version>
              <scope>compile</scope>
              <optional>true</optional>
          </dependency>
@@ -70,20 +111,72 @@ index 127d0c14..24a5f780 100644
  
      <dependencies>
 diff --git a/pom.xml b/pom.xml
-index 45f14084..b6430352 100644
+index 45f14084..2e89d6ec 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -90,7 +90,7 @@
+@@ -89,8 +89,8 @@
+ 
      <properties>
          <build.number>unknown</build.number>
-         <lombok.version>1.18.22</lombok.version>
+-        <lombok.version>1.18.22</lombok.version>
 -        <netty.version>4.1.72.Final</netty.version>
-+        <netty.version>4.1.74.Final</netty.version>
++        <lombok.version>1.18.24</lombok.version>
++        <netty.version>4.1.76.Final</netty.version>
          <maven.compiler.source>1.8</maven.compiler.source>
          <maven.compiler.target>1.8</maven.compiler.target>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+@@ -106,7 +106,7 @@
+         <dependency>
+             <groupId>com.google.guava</groupId>
+             <artifactId>guava</artifactId>
+-            <version>31.0.1-jre</version>
++            <version>31.1-jre</version>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+@@ -145,11 +145,11 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+-                <version>3.8.1</version>
++                <version>3.10.1</version>
+             </plugin>
+             <plugin>
+                 <artifactId>maven-javadoc-plugin</artifactId>
+-                <version>3.2.0</version>
++                <version>3.4.0</version>
+                 <configuration>
+                     <doclint>none</doclint>
+                 </configuration>
+@@ -297,7 +297,7 @@
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-javadoc-plugin</artifactId>
+-                        <version>3.2.0</version>
++                        <version>3.4.0</version>
+                         <executions>
+                             <!-- Execute Javadoc once normally to catch any warnings -->
+                             <execution>
+@@ -357,7 +357,7 @@
+                     <plugin>
+                         <groupId>org.projectlombok</groupId>
+                         <artifactId>lombok-maven-plugin</artifactId>
+-                        <version>1.18.12.0</version>
++                        <version>1.18.20.0</version>
+                         <executions>
+                             <execution>
+                                 <id>delombok</id>
+@@ -412,7 +412,7 @@
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-source-plugin</artifactId>
+-                        <version>2.4</version>
++                        <version>3.2.1</version>
+                         <executions>
+                             <execution>
+                                 <id>attach-sources</id>
 diff --git a/proxy/pom.xml b/proxy/pom.xml
-index 3df0498a..d413a80c 100644
+index 3df0498a..2a01f640 100644
 --- a/proxy/pom.xml
 +++ b/proxy/pom.xml
 @@ -109,7 +109,7 @@
@@ -91,7 +184,7 @@ index 3df0498a..d413a80c 100644
              <groupId>mysql</groupId>
              <artifactId>mysql-connector-java</artifactId>
 -            <version>8.0.27</version>
-+            <version>8.0.28</version>
++            <version>8.0.29</version>
              <scope>runtime</scope>
          </dependency>
          <!-- add these back in as they are not exposed by the API -->
@@ -105,5 +198,5 @@ index 3df0498a..d413a80c 100644
          </dependency>
          <dependency>
 -- 
-2.35.1
+2.30.2
 
