@@ -1,4 +1,4 @@
-From afe5e3d3b5535aa39faa0b7591cad38e2c4062de Mon Sep 17 00:00:00 2001
+From 7ee69340c5d1e9200edd502b41b04f7fdc8e309b Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -18,7 +18,7 @@ index 379b6023..3baf662f 100644
      </dependencies>
  </project>
 diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
-index cbd16c34..65c0444b 100644
+index cbd16c34..70ff2e8f 100644
 --- a/bootstrap/pom.xml
 +++ b/bootstrap/pom.xml
 @@ -42,7 +42,7 @@
@@ -44,7 +44,7 @@ index cbd16c34..65c0444b 100644
                      </filters>
                      <transformers>
 -                        <transformer implementation="com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer.PluginsCacheFileTransformer" />
-+                        <transformer implementation="io.github.edwgiz.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer">
++                        <transformer implementation="io.github.edwgiz.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer" />
                      </transformers>
                  </configuration>
                  <dependencies>
