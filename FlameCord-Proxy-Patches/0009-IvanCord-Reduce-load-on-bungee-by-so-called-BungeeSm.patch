@@ -1,4 +1,4 @@
-From 61ca2009b8b0aaac248abf9d39c33f3d07604d89 Mon Sep 17 00:00:00 2001
+From d1fcd57c4df9830379424551f8bd43c203d131c2 Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -577,10 +577,10 @@ index 8becc26a..f9e1cd5f 100644
          new Bootstrap()
 diff --git a/shared/pom.xml b/shared/pom.xml
 new file mode 100644
-index 00000000..de6e694c
+index 00000000..c50d7e31
 --- /dev/null
 +++ b/shared/pom.xml
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,37 @@
 +<?xml version="1.0" encoding="UTF-8"?>
 +<project xmlns="http://maven.apache.org/POM/4.0.0"
 +         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -593,7 +593,9 @@ index 00000000..de6e694c
 +    </parent>
 +    <modelVersion>4.0.0</modelVersion>
 +
++    <groupId>com.mrivanplays</groupId>
 +    <artifactId>ivancord-shared</artifactId>
++    <version>1.18-R0.1-SNAPSHOT</version>
 +    <packaging>jar</packaging>
 +
 +    <name>IvanCord-Shared</name>
