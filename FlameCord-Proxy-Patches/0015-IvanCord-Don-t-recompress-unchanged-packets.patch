@@ -1,4 +1,4 @@
-From 93fce6dba464a5909917cace2fdcc6d48929a99d Mon Sep 17 00:00:00 2001
+From 87b537bd29ccdf994ac598d1f394c2c244a21b2b Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Thu, 3 Mar 2022 09:08:37 +0200
 Subject: [PATCH] (IvanCord) Don't recompress unchanged packets

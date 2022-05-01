@@ -1,4 +1,4 @@
-From 5797670c037077b9fd4e76989d088574d23aa71d Mon Sep 17 00:00:00 2001
+From 43e5cc62fefb375d9f4a6da9dfe79b49fafa4067 Mon Sep 17 00:00:00 2001
 From: foss-mc <69294560+foss-mc@users.noreply.github.com>
 Date: Tue, 11 Jan 2022 16:30:55 +0200
 Subject: [PATCH] (IvanCord) Ping and close changes
@@ -9,7 +9,7 @@ response on proxy ping if result is null.
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index 215b7e1e..5112ea24 100644
+index 3a723ecb..8d5f069d 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 @@ -117,6 +117,16 @@ public class PipelineUtils
@@ -28,8 +28,8 @@ index 215b7e1e..5112ea24 100644
 +        // IvanCord end
      };
      public static final Base BASE = new Base();
-     private static final KickStringWriter legacyKicker = new KickStringWriter();
-@@ -271,5 +281,15 @@ public class PipelineUtils
+     public static final Base LIMITED_BASE = new Base( true ); // IvanCord - Add LIMITED_BASE for connections from clients
+@@ -281,5 +291,15 @@ public class PipelineUtils
  
              ctx.close();
          }
