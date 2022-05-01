@@ -1,0 +1,50 @@
+From a7af2f31ce91c8d18a705525eb6314790c69ecaf Mon Sep 17 00:00:00 2001
+From: foss-mc <69294560+foss-mc@users.noreply.github.com>
+Date: Tue, 11 Jan 2022 16:30:55 +0200
+Subject: [PATCH] (IvanCord) Ping and close changes
+
+close on exception whenever a channel is initializing and close without
+response on proxy ping if result is null.
+
+Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+index eacc8aae..d81ee41a 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+@@ -117,6 +117,16 @@ public class PipelineUtils
+ 
+             ctx.close();
+         }
++
++        // IvanCord start - close on exception caught
++        @Override
++        public void exceptionCaught(final io.netty.channel.ChannelHandlerContext ctx, final Throwable cause) throws Exception
++        {
++            BungeeCord.getInstance().getLogger().log( Level.SEVERE, "An error encountered whilst initializing channel for a connection", cause );
++
++            ctx.close();
++        }
++        // IvanCord end
+     };
+     public static final Base BASE = new Base();
+     private static final KickStringWriter legacyKicker = new KickStringWriter();
+@@ -221,5 +231,15 @@ public class PipelineUtils
+ 
+             ctx.close();
+         }
++
++        // IvanCord start - close on exception caught
++        @Override
++        public void exceptionCaught(final io.netty.channel.ChannelHandlerContext ctx, final Throwable cause) throws Exception
++        {
++            BungeeCord.getInstance().getLogger().log( Level.SEVERE, "An error encountered whilst initializing channel for a connection", cause );
++
++            ctx.close();
++        }
++        // IvanCord end
+     }
+ }
+-- 
+2.23.0
+
