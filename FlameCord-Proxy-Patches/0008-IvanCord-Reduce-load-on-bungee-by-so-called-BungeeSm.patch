@@ -1,4 +1,4 @@
-From d1fcd57c4df9830379424551f8bd43c203d131c2 Mon Sep 17 00:00:00 2001
+From 12f1bf118bbb5dfefe9e4e5381ae14f3378eaa3c Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -188,7 +188,7 @@ index 581ff129..8c20859d 100644
  
      <build>
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 203710b6..4325767c 100644
+index 0665fb47..bbfec1d9 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -380,7 +380,7 @@ public class BungeeCord extends ProxyServer
@@ -236,7 +236,7 @@ index 35d53325..25c321a1 100644
                  {
                      @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index dcdb54bb..934f9b50 100644
+index ce84f5b6..0a97e2d3 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -397,7 +397,7 @@ public final class UserConnection implements ProxiedPlayer
@@ -249,7 +249,7 @@ index dcdb54bb..934f9b50 100644
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 0fa0a586..79b5b730 100644
+index 7fa3217e..0ff6f9fd 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 @@ -152,9 +152,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
@@ -273,7 +273,7 @@ index 0fa0a586..79b5b730 100644
          }
      }
  
-@@ -415,6 +417,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -402,6 +404,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              handshake.setHost( split[0] );
              extraDataInHandshake = "\0" + split[1];
          }
@@ -281,7 +281,7 @@ index 0fa0a586..79b5b730 100644
  
          // SRV records can end with a . depending on DNS / client.
          if ( handshake.getHost().endsWith( "." ) )
-@@ -501,7 +504,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -488,7 +491,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                  }
                  break;
              default:
@@ -290,7 +290,7 @@ index 0fa0a586..79b5b730 100644
          }
      }
  
-@@ -905,4 +908,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -892,4 +895,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              brandMessage = input;
          }
      }
@@ -334,7 +334,7 @@ index 37337429..bbed9090 100644
      }
      // Waterfall End
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
-index 16365944..1eca7fde 100644
+index 606866a5..65f00283 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
 @@ -53,6 +53,13 @@ public class ChannelWrapper
@@ -350,7 +350,7 @@ index 16365944..1eca7fde 100644
 +
      public void write(Object packet)
      {
-         if ( !closed && ch.isActive() ) // IvanCord
+         if ( !closed )
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
 index a2086b45..e2f02dbc 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
@@ -415,7 +415,7 @@ index a2086b45..e2f02dbc 100644
      }
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index 20d57217..d7c7addb 100644
+index eacc8aae..215b7e1e 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 @@ -69,14 +69,14 @@ public class PipelineUtils
