@@ -1,4 +1,4 @@
-From 74f75eecd351aacbc82a9c9adf91968a486ddaeb Mon Sep 17 00:00:00 2001
+From 2e2718ad4b456333d5331a7138275936b7fc7a75 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sun, 1 May 2022 12:26:24 +0700
 Subject: [PATCH] Revert "Duplicate buf instead of Copy"
