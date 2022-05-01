@@ -1,4 +1,4 @@
-From d04698bf8d46d0d182cf158ac774c406b81779a3 Mon Sep 17 00:00:00 2001
+From c8bde0cd4e6790b27daf651557236f22fc99594b Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Tue, 11 Jan 2022 16:21:16 +0200
 Subject: [PATCH] (IvanCord) More DoS mitigations
@@ -118,7 +118,7 @@ index cfd8e64e..bb681e27 100644
      // Waterfall end
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index d7c7addb..6b70f31f 100644
+index 215b7e1e..3a723ecb 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 @@ -89,7 +89,7 @@ public class PipelineUtils
@@ -157,7 +157,7 @@ index d7c7addb..6b70f31f 100644
          @Override
          public void initChannel(Channel ch) throws Exception
          {
-@@ -258,7 +268,7 @@ public class PipelineUtils
+@@ -257,7 +267,7 @@ public class PipelineUtils
              ch.config().setAllocator( PooledByteBufAllocator.DEFAULT );
              ch.config().setWriteBufferWaterMark( MARK );
  

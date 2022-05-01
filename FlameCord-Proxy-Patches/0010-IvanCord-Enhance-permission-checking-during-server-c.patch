@@ -1,4 +1,4 @@
-From 37c50ba96dfbc7ecc21fb298de8cd01ffe3d2939 Mon Sep 17 00:00:00 2001
+From e6a5690076729c2c3f0078399fe2638d5b600651 Mon Sep 17 00:00:00 2001
 From: Mystiflow <mystiflow@gmail.com>
 Date: Thu, 9 Dec 2021 20:43:13 +0200
 Subject: [PATCH] (IvanCord) Enhance permission checking during server connects
@@ -143,7 +143,7 @@ index 448c6caa..fad67ed9 100644
  
      @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 934f9b50..73058aac 100644
+index 0a97e2d3..dc2364f7 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -337,6 +337,19 @@ public final class UserConnection implements ProxiedPlayer
