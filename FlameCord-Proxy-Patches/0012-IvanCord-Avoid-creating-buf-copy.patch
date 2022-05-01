@@ -1,4 +1,4 @@
-From b4c9b84925fc695bbac97fc3e5dfdc67de16a3f4 Mon Sep 17 00:00:00 2001
+From 740d8f20f499d4d5d187e290ac3a1a25b0871d0d Mon Sep 17 00:00:00 2001
 From: MrIvanPlays <pekov.ivan@abv.bg>
 Date: Tue, 3 Dec 2019 14:03:56 +0200
 Subject: [PATCH] (IvanCord) Avoid creating buf copy
