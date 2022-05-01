@@ -1,4 +1,4 @@
-From 26742622c49959168fac2248a5ae20bdaf69bfe2 Mon Sep 17 00:00:00 2001
+From 4a1c7f15b19642a9b68728fe9a57481014bf9504 Mon Sep 17 00:00:00 2001
 From: MrIvanPlays <pekov.ivan@abv.bg>
 Date: Tue, 3 Dec 2019 14:03:56 +0200
 Subject: [PATCH] (IvanCord) Avoid creating buf copy
@@ -6,7 +6,7 @@ Subject: [PATCH] (IvanCord) Avoid creating buf copy
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-index e1852173..3b1c2fe5 100644
+index 3992f521..acb850bb 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 @@ -52,7 +52,11 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
@@ -21,9 +21,9 @@ index e1852173..3b1c2fe5 100644
  
          Object packetTypeInfo = null;
          try
-@@ -112,13 +116,16 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -87,13 +91,16 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+                     // Waterfall end
                      throw new BadPacketException( "Packet " + protocol + ":" + prot.getDirection() + "/" + packetId + " (" + packet.getClass().getSimpleName() + ") larger than expected, extra bytes: " + in.readableBytes() );
-                     } // IvanCord end
                  }
 +                /* IvanCord start - avoid creating buf copy
              } else
@@ -40,7 +40,7 @@ index e1852173..3b1c2fe5 100644
          } catch (BadPacketException | IndexOutOfBoundsException e) {
              // Waterfall start: Additional DoS mitigations
              if(!DEBUG) {
-@@ -133,13 +140,15 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -108,13 +115,15 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              } else {
                  packetTypeStr = "unknown";
              }

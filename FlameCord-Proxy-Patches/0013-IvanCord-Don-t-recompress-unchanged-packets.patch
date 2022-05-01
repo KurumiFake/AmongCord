@@ -1,4 +1,4 @@
-From c975d2a9ef07f3c7e1e96abb5cc80fdf4d2e527d Mon Sep 17 00:00:00 2001
+From 4cd6afd1c3c81fd674cff12d4561f3d2682674cd Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Thu, 3 Mar 2022 09:08:37 +0200
 Subject: [PATCH] (IvanCord) Don't recompress unchanged packets
@@ -6,7 +6,7 @@ Subject: [PATCH] (IvanCord) Don't recompress unchanged packets
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-index 3b1c2fe5..c5a1702d 100644
+index acb850bb..5c700cd3 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 @@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
@@ -44,7 +44,7 @@ index 3b1c2fe5..c5a1702d 100644
  
          Protocol.DirectionData prot = ( server ) ? protocol.TO_SERVER : protocol.TO_CLIENT;
          
-@@ -124,7 +133,22 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -99,7 +108,22 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              }
  
              in.readerIndex( readIrx ); // IvanCord
@@ -67,7 +67,7 @@ index 3b1c2fe5..c5a1702d 100644
              //slice = null; // IvanCord
          } catch (BadPacketException | IndexOutOfBoundsException e) {
              // Waterfall start: Additional DoS mitigations
-@@ -149,6 +173,15 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -124,6 +148,15 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
                  slice.release();
              }
               */ // IvanCord end
@@ -274,10 +274,10 @@ index eaedf4bc..95dc8dd4 100644
              } finally
              {
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
-index 1eca7fde..163bba8f 100644
+index 16365944..84f80330 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
-@@ -64,6 +64,8 @@ public class ChannelWrapper
+@@ -57,6 +57,8 @@ public class ChannelWrapper
      {
          if ( !closed && ch.isActive() ) // IvanCord
          {
@@ -286,7 +286,7 @@ index 1eca7fde..163bba8f 100644
              if ( packet instanceof PacketWrapper )
              {
                  ( (PacketWrapper) packet ).setReleased( true );
-@@ -72,6 +74,13 @@ public class ChannelWrapper
+@@ -65,6 +67,13 @@ public class ChannelWrapper
              {
                  ch.writeAndFlush( packet, ch.voidPromise() );
              }
