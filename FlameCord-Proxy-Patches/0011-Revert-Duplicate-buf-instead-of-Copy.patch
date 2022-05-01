@@ -1,4 +1,4 @@
-From 36c92ef6db41126a44c4b9f97e9d92a4ede03af7 Mon Sep 17 00:00:00 2001
+From d3fe5adb72c4b7a13f1d9dd18e6da7c68358f8fb Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sun, 1 May 2022 12:26:24 +0700
 Subject: [PATCH] Revert "Duplicate buf instead of Copy"
@@ -8,7 +8,7 @@ This reverts commit 14b662cbcdd63ff9cfac453a4090668a4dfa940b.
 // AmongCord - revert to use IvanCord's impl
 
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-index 074d2437..3992f521 100644
+index 4324a266..e1852173 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 @@ -52,8 +52,7 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
@@ -21,7 +21,7 @@ index 074d2437..3992f521 100644
  
          Object packetTypeInfo = null;
          try
-@@ -93,8 +92,7 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -118,8 +117,7 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
                  in.skipBytes( in.readableBytes() );
              }
  

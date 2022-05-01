@@ -1,0 +1,852 @@
+From 12f1bf118bbb5dfefe9e4e5381ae14f3378eaa3c Mon Sep 17 00:00:00 2001
+From: xDark <aleshkailyashevich@gmail.com>
+Date: Wed, 29 Jul 2020 16:07:27 +0300
+Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
+ "BungeeSmasher"s
+
+Co-Authored by: MrIvanPlays <ivan@mrivanplays.com> - ported to IvanCord
+
+Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
+
+diff --git a/pom.xml b/pom.xml
+index 2e89d6ec..e57affcf 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -64,6 +64,7 @@
+         <!--<module>slf4j</module>-->
+         <module>native</module>
+         <module>flamecord</module> <!-- FlameCord - POM Changes -->
++        <module>shared</module> <!-- IvanCord -->
+     </modules>
+ 
+     <scm>
+diff --git a/protocol/pom.xml b/protocol/pom.xml
+index f45d4f7a..d5c977dd 100644
+--- a/protocol/pom.xml
++++ b/protocol/pom.xml
+@@ -73,5 +73,13 @@
+             <scope>compile</scope>
+         </dependency>
+         <!-- FlameCord end -->
++        <!-- IvanCord start -->
++        <dependency>
++            <groupId>com.mrivanplays</groupId>
++            <artifactId>ivancord-shared</artifactId>
++            <version>${project.version}</version>
++            <scope>compile</scope>
++        </dependency>
++        <!-- IvanCord end -->
+     </dependencies>
+ </project>
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/BadPacketException.java b/protocol/src/main/java/net/md_5/bungee/protocol/BadPacketException.java
+index f20104a2..951adc0d 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/BadPacketException.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/BadPacketException.java
+@@ -1,6 +1,6 @@
+ package net.md_5.bungee.protocol;
+ 
+-public class BadPacketException extends RuntimeException
++public class BadPacketException extends net.md_5.bungee.util.QuietException // IvanCord
+ {
+     private static final boolean PROCESS_TRACES = Boolean.getBoolean("waterfall.bad-packet-traces");
+ 
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java b/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
+index d07b88b8..3aca13ac 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
+@@ -153,8 +153,13 @@ public abstract class DefinedPacket
+         int out = 0;
+         int bytes = 0;
+         byte in;
++        int readable = input.readableBytes(); // IvanCord
+         while ( true )
+         {
++            if ( readable-- == 0 )
++            {
++                com.mrivanplays.ivancord.shared.Errors.endOfBuffer();
++            }
+             // Waterfall start
+             if (input.readableBytes() == 0) {
+                 throw PROCESS_TRACES ? new BadPacketException("No more bytes reading varint") : NO_MORE_BYTES_EXCEPTION;
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/KickStringWriter.java b/protocol/src/main/java/net/md_5/bungee/protocol/KickStringWriter.java
+index e2e34a34..b3f96f82 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/KickStringWriter.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/KickStringWriter.java
+@@ -13,10 +13,13 @@ public class KickStringWriter extends MessageToByteEncoder<String>
+     protected void encode(ChannelHandlerContext ctx, String msg, ByteBuf out) throws Exception
+     {
+         out.writeByte( 0xFF );
+-        out.writeShort( msg.length() );
+-        for ( char c : msg.toCharArray() )
++        // IvanCord start
++        int len = msg.length();
++        out.writeShort( len );
++        for ( int i = 0; i < len; i++ )
+         {
+-            out.writeChar( c );
++            out.writeChar( msg.charAt( i ) );
++            // IvanCord end
+         }
+     }
+ }
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
+index 074d2437..4324a266 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
+@@ -65,6 +65,13 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+             // Waterfall end
+ 
+             int packetId = DefinedPacket.readVarInt( in );
++            // IvanCord start
++            if ( server && !supportsForge && ( packetId < 0 || packetId > Protocol.MAX_PACKET_ID ) )
++            {
++                com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ctx.channel(), null );
++                return;
++            }
++            // IvanCord end
+             packetTypeInfo = packetId;
+             // FlameCord Start - Check if packetId is invalid.
+             if (packetId < 0 || packetId > Protocol.MAX_PACKET_ID)
+@@ -77,7 +84,18 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+             {
+                 packetTypeInfo = packet.getClass();
+                 doLengthSanityChecks(in, packet, prot.getDirection(), packetId); // Waterfall: Additional DoS mitigations
++                try { // IvanCord
+                 packet.read( in, prot.getDirection(), protocolVersion );
++                } catch ( Throwable t ) // IvanCord start
++                {
++                    if ( server )
++                    {
++                        com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ctx.channel(), t );
++                        return;
++                    }
++                    throw t;
++                }
++                // IvanCord end
+ 
+                 if ( in.isReadable() )
+                 {
+@@ -86,7 +104,14 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+                         throw PACKET_NOT_READ_TO_END;
+                     }
+                     // Waterfall end
++                    // IvanCord start
++                    if ( server )
++                    {
++                        com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ctx.channel(), new BadPacketException( "Did not read all bytes from packet " + packet.getClass() + " " + packetId + " Protocol " + protocol + " Direction " + prot.getDirection() ) );
++                    } else
++                    {
+                     throw new BadPacketException( "Packet " + protocol + ":" + prot.getDirection() + "/" + packetId + " (" + packet.getClass().getSimpleName() + ") larger than expected, extra bytes: " + in.readableBytes() );
++                    } // IvanCord end
+                 }
+             } else
+             {
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/OverflowPacketException.java b/protocol/src/main/java/net/md_5/bungee/protocol/OverflowPacketException.java
+index 237955ab..a8cb2aa7 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/OverflowPacketException.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/OverflowPacketException.java
+@@ -1,6 +1,6 @@
+ package net.md_5.bungee.protocol;
+ 
+-public class OverflowPacketException extends RuntimeException
++public class OverflowPacketException extends net.md_5.bungee.util.QuietException // IvanCord
+ {
+ 
+     public OverflowPacketException(String message)
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/Varint21FrameDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/Varint21FrameDecoder.java
+index c0d37142..f33df1f3 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/Varint21FrameDecoder.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/Varint21FrameDecoder.java
+@@ -60,6 +60,9 @@ public class Varint21FrameDecoder extends ByteToMessageDecoder
+             }
+         }
+ 
+-        throw new CorruptedFrameException( "length wider than 21-bit" );
++        // IvanCord start
++        setSingleDecode( true );
++        com.mrivanplays.ivancord.shared.Errors.badFrameLength();
++        // IvanCord end
+     }
+ }
+diff --git a/proxy/pom.xml b/proxy/pom.xml
+index 581ff129..8c20859d 100644
+--- a/proxy/pom.xml
++++ b/proxy/pom.xml
+@@ -195,6 +195,14 @@
+             <scope>compile</scope>
+         </dependency>
+         <!-- FlameCord end -->
++        <!-- IvanCord start -->
++        <dependency>
++            <groupId>com.mrivanplays</groupId>
++            <artifactId>ivancord-shared</artifactId>
++            <version>${project.version}</version>
++            <scope>compile</scope>
++        </dependency>
++        <!-- IvanCord end -->
+     </dependencies>
+ 
+     <build>
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 0665fb47..bbfec1d9 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -380,7 +380,7 @@ public class BungeeCord extends ProxyServer
+                 }
+             };
+             new ServerBootstrap()
+-                    .channel( PipelineUtils.getServerChannel( info.getSocketAddress() ) )
++                    .channelFactory( PipelineUtils.getServerChannelFactory( info.getSocketAddress() ) ) // IvanCord
+                     .option( ChannelOption.SO_REUSEADDR, true ) // TODO: Move this elsewhere!
+                     .childAttr( PipelineUtils.LISTENER, info )
+                     .childHandler( PipelineUtils.SERVER_CHILD )
+@@ -407,7 +407,7 @@ public class BungeeCord extends ProxyServer
+                         }
+                     }
+                 };
+-                new RemoteQuery( this, info ).start( PipelineUtils.getDatagramChannel(), new InetSocketAddress( info.getHost().getAddress(), info.getQueryPort() ), workerEventLoopGroup, bindListener );
++                new RemoteQuery( this, info ).start( PipelineUtils.getDatagramChannelFactory(), new InetSocketAddress( info.getHost().getAddress(), info.getQueryPort() ), workerEventLoopGroup, bindListener ); // IvanCord
+             }
+         }
+     }
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java b/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
+index 1ea654f1..448c6caa 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
+@@ -183,7 +183,7 @@ public class BungeeServerInfo implements ServerInfo
+             }
+         };
+         new Bootstrap()
+-                .channel( PipelineUtils.getChannel( socketAddress ) )
++                .channelFactory( PipelineUtils.getChannelFactory( socketAddress ) ) // IvanCord
+                 .group( BungeeCord.getInstance().workerEventLoopGroup )
+                 .handler( PipelineUtils.BASE )
+                 .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, BungeeCord.getInstance().getConfig().getRemotePingTimeout() )
+diff --git a/proxy/src/main/java/net/md_5/bungee/ConnectionThrottle.java b/proxy/src/main/java/net/md_5/bungee/ConnectionThrottle.java
+index 35d53325..25c321a1 100644
+--- a/proxy/src/main/java/net/md_5/bungee/ConnectionThrottle.java
++++ b/proxy/src/main/java/net/md_5/bungee/ConnectionThrottle.java
+@@ -29,7 +29,7 @@ public class ConnectionThrottle
+                 .ticker( ticker )
+                 .concurrencyLevel( Runtime.getRuntime().availableProcessors() )
+                 .initialCapacity( 100 )
+-                .expireAfterWrite( throttleTime, TimeUnit.MILLISECONDS )
++                .expireAfterAccess( throttleTime, TimeUnit.MILLISECONDS ) // IvanCord
+                 .build( new CacheLoader<InetAddress, AtomicInteger>()
+                 {
+                     @Override
+diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+index ce84f5b6..0a97e2d3 100644
+--- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
++++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+@@ -397,7 +397,7 @@ public final class UserConnection implements ProxiedPlayer
+             }
+         };
+         Bootstrap b = new Bootstrap()
+-                .channel( PipelineUtils.getChannel( target.getAddress() ) )
++                .channelFactory( PipelineUtils.getChannelFactory( target.getAddress() ) ) // IvanCord
+                 .group( ch.getHandle().eventLoop() )
+                 .handler( initializer )
+                 .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
+diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+index 7fa3217e..0ff6f9fd 100644
+--- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
++++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+@@ -152,9 +152,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+         if ( canSendKickMessage() )
+         {
+             disconnect( ChatColor.RED + Util.exception( t ) );
++        /* // IvanCord
+         } else
+         {
+             ch.close();
++         */ // IvanCord
+         }
+     }
+ 
+@@ -163,7 +165,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+     {
+         if ( packet.packet == null )
+         {
+-            throw new QuietException( "Unexpected packet received during server login process!\n" + BufUtil.dump(packet.buf, 16) );
++            com.mrivanplays.ivancord.shared.Errors.unexpectedLoginPacket( packet.buf ); // IvanCord
+         }
+     }
+ 
+@@ -402,6 +404,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+             handshake.setHost( split[0] );
+             extraDataInHandshake = "\0" + split[1];
+         }
++        ch.setForge( hasFmlHandshake() ); // IvanCord
+ 
+         // SRV records can end with a . depending on DNS / client.
+         if ( handshake.getHost().endsWith( "." ) )
+@@ -488,7 +491,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+                 }
+                 break;
+             default:
+-                throw new QuietException( "Cannot request protocol " + handshake.getRequestedProtocol() );
++                com.mrivanplays.ivancord.shared.Errors.invalidProtocol( handshake.getRequestedProtocol() );
+         }
+     }
+ 
+@@ -892,4 +895,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+             brandMessage = input;
+         }
+     }
++
++    // IvanCord start
++    public boolean hasFmlHandshake()
++    {
++        return getExtraDataInHandshake().contains( net.md_5.bungee.forge.ForgeConstants.FML_HANDSHAKE_TAG );
++    }
++    // IvanCord end
+ }
+diff --git a/proxy/src/main/java/net/md_5/bungee/http/HttpClient.java b/proxy/src/main/java/net/md_5/bungee/http/HttpClient.java
+index 37337429..bbed9090 100644
+--- a/proxy/src/main/java/net/md_5/bungee/http/HttpClient.java
++++ b/proxy/src/main/java/net/md_5/bungee/http/HttpClient.java
+@@ -30,7 +30,7 @@ public class HttpClient
+     private static final Cache<String, InetAddress> addressCache = CacheBuilder.newBuilder().expireAfterWrite( 1, TimeUnit.MINUTES ).build();
+     // Waterfall Start - optionally use async resolver from Netty
+     private static final io.netty.resolver.dns.DnsAddressResolverGroup dnsResolverGroup =
+-            new io.netty.resolver.dns.DnsAddressResolverGroup(PipelineUtils.getDatagramChannel(), io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider.INSTANCE);
++            new io.netty.resolver.dns.DnsAddressResolverGroup(PipelineUtils.getDatagramChannelFactory(), io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider.INSTANCE); // IvanCord
+     // Waterfall End
+ 
+     @SuppressWarnings("UnusedAssignment")
+@@ -111,7 +111,7 @@ public class HttpClient
+ 
+     private static void getWithNettyResolver(EventLoop eventLoop, URI uri, int port, ChannelFutureListener future, Callback<String> callback, boolean ssl) {
+         java.net.InetSocketAddress address = java.net.InetSocketAddress.createUnresolved(uri.getHost(), port);
+-        new Bootstrap().channel( PipelineUtils.getChannel( null ) ).group( eventLoop ).handler( new HttpInitializer( callback, ssl, uri.getHost(), port ) ).
++        new Bootstrap().channelFactory( PipelineUtils.getChannelFactory( null ) ).group( eventLoop ).handler( new HttpInitializer( callback, ssl, uri.getHost(), port ) ). // IvanCord
+                 option( ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT ).resolver(dnsResolverGroup).remoteAddress( address ).connect().addListener( future );
+     }
+ 
+@@ -130,7 +130,7 @@ public class HttpClient
+             }
+             addressCache.put( uri.getHost(), inetHost );
+         }
+-        new Bootstrap().channel( PipelineUtils.getChannel( null ) ).group( eventLoop ).handler( new HttpInitializer( callback, ssl, uri.getHost(), port ) ).
++        new Bootstrap().channelFactory( PipelineUtils.getChannelFactory( null ) ).group( eventLoop ).handler( new HttpInitializer( callback, ssl, uri.getHost(), port ) ). // IvanCord
+                 option( ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT ).remoteAddress( inetHost, port ).connect().addListener( future );
+     }
+     // Waterfall End
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
+index 606866a5..65f00283 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
+@@ -53,6 +53,13 @@ public class ChannelWrapper
+         pipeline.get( MinecraftEncoder.class ).setProtocolVersion( protocol );
+     }
+ 
++    // IvanCord start
++    public void setForge(boolean forge)
++    {
++        ch.pipeline().get( MinecraftDecoder.class ).setSupportsForge( forge );
++    }
++    // IvanCord end
++
+     public void write(Object packet)
+     {
+         if ( !closed )
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
+index a2086b45..e2f02dbc 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
+@@ -29,6 +29,11 @@ import net.md_5.bungee.util.QuietException;
+ public class HandlerBoss extends ChannelInboundHandlerAdapter
+ {
+ 
++    // IvanCord start
++    private static long lastInitialHandlerError;
++    private static int initialHandlerSuppressedCount;
++    // IvanCord end
++
+     private ChannelWrapper channel;
+     private PacketHandler handler;
+ 
+@@ -150,6 +155,22 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+     {
+         if ( ctx.channel().isActive() )
+         {
++            // IvanCord start
++            if ( handler instanceof InitialHandler && !com.mrivanplays.ivancord.shared.Errors.isDebug() )
++            {
++                long now = System.currentTimeMillis();
++                if ( now - lastInitialHandlerError > 1000L )
++                {
++                    lastInitialHandlerError = now;
++                    initialHandlerSuppressedCount = 0;
++                }
++                if ( ++initialHandlerSuppressedCount == 5 )
++                {
++                    com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ctx.channel(), null );
++                    return;
++                }
++            }
++            // IvanCord end
+             boolean logExceptions = !( handler instanceof PingHandler );
+ 
+             // Flamecord start - Antibot System
+@@ -187,6 +208,14 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+                         {
+                             handler, cause.getCause().getMessage()
+                         } );
++                    // IvanCord start
++                    } else if ( cause.getCause() instanceof QuietException )
++                    {
++                        ProxyServer.getInstance().getLogger().log( Level.SEVERE, "{0} - encountered exception: {1}", new Object[]
++                        {
++                             handler, cause.getCause().getMessage()
++                        } );
++                        // IvanCord end
+                     } else
+                     {
+                         ProxyServer.getInstance().getLogger().log( Level.WARNING, "{0} - could not decode packet! {1}", new Object[]
+@@ -223,7 +252,7 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+                 }
+             }
+ 
+-            ctx.close();
++            com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ctx.channel(), null ); // IvanCord
+         }
+     }
+ }
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+index eacc8aae..215b7e1e 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+@@ -69,14 +69,14 @@ public class PipelineUtils
+ 
+             if ( BungeeCord.getInstance().getConnectionThrottle() != null && BungeeCord.getInstance().getConnectionThrottle().throttle( remoteAddress ) )
+             {
+-                ch.close();
++                com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ch, null, true ); // IvanCord
+                 return;
+             }
+             ListenerInfo listener = ch.attr( LISTENER ).get();
+ 
+             if ( BungeeCord.getInstance().getPluginManager().callEvent( new ClientConnectEvent( remoteAddress, listener ) ).isCancelled() )
+             {
+-                ch.close();
++                com.mrivanplays.ivancord.shared.ChannelUtil.shutdownChannel( ch, null, true ); // IvanCord
+                 return;
+             }
+ 
+@@ -131,6 +131,11 @@ public class PipelineUtils
+     public static final String FRAME_PREPENDER = "frame-prepender";
+     public static final String LEGACY_DECODER = "legacy-decoder";
+     public static final String LEGACY_KICKER = "legacy-kick";
++    // IvanCord start - channel factories
++    private static final io.netty.channel.ChannelFactory<? extends ServerChannel> serverChannelFactory, serverChannelDomainFactory;
++    private static final io.netty.channel.ChannelFactory<? extends Channel> channelFactory, channelDomainFactory;
++    private static final io.netty.channel.ChannelFactory<? extends DatagramChannel> datagramChannelFactory;
++    // IvanCord end
+ 
+     private static boolean epoll;
+ 
+@@ -148,6 +153,13 @@ public class PipelineUtils
+                 ProxyServer.getInstance().getLogger().log( Level.WARNING, "Epoll is not working, falling back to NIO: {0}", Util.exception( Epoll.unavailabilityCause() ) );
+             }
+         }
++        // IvanCord start
++        serverChannelFactory = epoll ? EpollServerSocketChannel::new : NioServerSocketChannel::new;
++        serverChannelDomainFactory = epoll ? EpollServerDomainSocketChannel::new : null;
++        channelFactory = epoll ? EpollSocketChannel::new : NioSocketChannel::new;
++        channelDomainFactory = epoll ? EpollDomainSocketChannel::new : null;
++        datagramChannelFactory = epoll ? EpollDatagramChannel::new : NioDatagramChannel::new;
++        // IvanCord end
+     }
+ 
+     public static EventLoopGroup newEventLoopGroup(int threads, ThreadFactory factory)
+@@ -155,6 +167,21 @@ public class PipelineUtils
+         return epoll ? new EpollEventLoopGroup( threads, factory ) : new NioEventLoopGroup( threads, factory );
+     }
+ 
++    // IvanCord start
++    public static io.netty.channel.ChannelFactory<? extends ServerChannel> getServerChannelFactory(SocketAddress address)
++    {
++        if ( address instanceof DomainSocketAddress )
++        {
++            Preconditions.checkState( epoll, "Epoll required to have UNIX sockets" );
++
++            return serverChannelDomainFactory;
++        }
++
++        return serverChannelFactory;
++    }
++
++    @Deprecated
++    // IvanCord end
+     public static Class<? extends ServerChannel> getServerChannel(SocketAddress address)
+     {
+         if ( address instanceof DomainSocketAddress )
+@@ -167,6 +194,21 @@ public class PipelineUtils
+         return epoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
+     }
+ 
++    // IvanCord start
++    public static io.netty.channel.ChannelFactory<? extends Channel> getChannelFactory(SocketAddress address)
++    {
++        if ( address instanceof DomainSocketAddress )
++        {
++            Preconditions.checkState( epoll, "Epoll required to have UNIX sockets" );
++
++            return channelDomainFactory;
++        }
++
++        return channelFactory;
++    }
++
++    @Deprecated
++    // IvanCord end
+     public static Class<? extends Channel> getChannel(SocketAddress address)
+     {
+         if ( address instanceof DomainSocketAddress )
+@@ -179,6 +221,14 @@ public class PipelineUtils
+         return epoll ? EpollSocketChannel.class : NioSocketChannel.class;
+     }
+ 
++    // IvanCord start
++    public static io.netty.channel.ChannelFactory<? extends DatagramChannel> getDatagramChannelFactory()
++    {
++        return datagramChannelFactory;
++    }
++
++    @Deprecated
++    // IvanCord end
+     public static Class<? extends DatagramChannel> getDatagramChannel()
+     {
+         return epoll ? EpollDatagramChannel.class : NioDatagramChannel.class;
+diff --git a/proxy/src/main/java/net/md_5/bungee/util/QuietException.java b/proxy/src/main/java/net/md_5/bungee/util/QuietException.java
+deleted file mode 100644
+index 3c958fde..00000000
+--- a/proxy/src/main/java/net/md_5/bungee/util/QuietException.java
++++ /dev/null
+@@ -1,25 +0,0 @@
+-package net.md_5.bungee.util;
+-
+-/**
+- * Exception without a stack trace component.
+- */
+-public class QuietException extends RuntimeException
+-{
+-
+-    public QuietException(String message)
+-    {
+-        super( message );
+-    }
+-
+-    @Override
+-    public Throwable initCause(Throwable cause)
+-    {
+-        return this;
+-    }
+-
+-    @Override
+-    public Throwable fillInStackTrace()
+-    {
+-        return this;
+-    }
+-}
+diff --git a/query/src/main/java/net/md_5/bungee/query/RemoteQuery.java b/query/src/main/java/net/md_5/bungee/query/RemoteQuery.java
+index 8becc26a..f9e1cd5f 100644
+--- a/query/src/main/java/net/md_5/bungee/query/RemoteQuery.java
++++ b/query/src/main/java/net/md_5/bungee/query/RemoteQuery.java
+@@ -16,6 +16,19 @@ public class RemoteQuery
+     private final ProxyServer bungee;
+     private final ListenerInfo listener;
+ 
++    // IvanCord start
++    public void start(io.netty.channel.ChannelFactory<? extends Channel> channelFactory, InetSocketAddress address, EventLoopGroup eventLoop, ChannelFutureListener cfl)
++    {
++        new Bootstrap()
++            .channelFactory( channelFactory )
++            .group( eventLoop )
++            .handler( new QueryHandler( bungee, listener ) )
++            .localAddress( address )
++            .bind().addListener( cfl );
++    }
++
++    @Deprecated
++    // IvanCord end
+     public void start(Class<? extends Channel> channel, InetSocketAddress address, EventLoopGroup eventLoop, ChannelFutureListener future)
+     {
+         new Bootstrap()
+diff --git a/shared/pom.xml b/shared/pom.xml
+new file mode 100644
+index 00000000..c50d7e31
+--- /dev/null
++++ b/shared/pom.xml
+@@ -0,0 +1,37 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <groupId>io.github.waterfallmc</groupId>
++        <artifactId>waterfall-parent</artifactId>
++        <version>1.18-R0.1-SNAPSHOT</version>
++        <relativePath>../pom.xml</relativePath>
++    </parent>
++    <modelVersion>4.0.0</modelVersion>
++
++    <groupId>com.mrivanplays</groupId>
++    <artifactId>ivancord-shared</artifactId>
++    <version>1.18-R0.1-SNAPSHOT</version>
++    <packaging>jar</packaging>
++
++    <name>IvanCord-Shared</name>
++    <description>Shared code accessible from all submodules</description>
++
++    <dependencies>
++        <dependency>
++            <groupId>io.netty</groupId>
++            <artifactId>netty-transport-native-unix-common</artifactId>
++            <version>${netty.version}</version>
++            <scope>compile</scope>
++        </dependency>
++        <dependency>
++            <groupId>io.netty</groupId>
++            <artifactId>netty-codec</artifactId>
++            <version>${netty.version}</version>
++            <scope>compile</scope>
++        </dependency>
++    </dependencies>
++
++
++</project>
+diff --git a/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelDiscardHandler.java b/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelDiscardHandler.java
+new file mode 100644
+index 00000000..b4c425e9
+--- /dev/null
++++ b/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelDiscardHandler.java
+@@ -0,0 +1,36 @@
++package com.mrivanplays.ivancord.shared;
++
++import io.netty.channel.ChannelHandler;
++import io.netty.channel.ChannelHandlerContext;
++import io.netty.channel.ChannelOutboundHandlerAdapter;
++import io.netty.channel.ChannelPromise;
++import io.netty.util.ReferenceCountUtil;
++
++@ChannelHandler.Sharable
++public class ChannelDiscardHandler extends ChannelOutboundHandlerAdapter
++{
++
++    public static final ChannelDiscardHandler INSTANCE = new ChannelDiscardHandler();
++
++    @Override
++    public void read(ChannelHandlerContext ctx) throws Exception
++    {
++    }
++
++    @Override
++    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception
++    {
++        ReferenceCountUtil.release( msg );
++        promise.setFailure( Errors.discard() );
++    }
++
++    @Override
++    public void flush(ChannelHandlerContext ctx) throws Exception
++    {
++    }
++
++    @Override
++    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
++    {
++    }
++}
+diff --git a/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelUtil.java b/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelUtil.java
+new file mode 100644
+index 00000000..103ad45b
+--- /dev/null
++++ b/shared/src/main/java/com/mrivanplays/ivancord/shared/ChannelUtil.java
+@@ -0,0 +1,50 @@
++package com.mrivanplays.ivancord.shared;
++
++import io.netty.channel.Channel;
++import io.netty.channel.ChannelPipeline;
++import io.netty.handler.codec.ByteToMessageDecoder;
++import lombok.SneakyThrows;
++import lombok.experimental.UtilityClass;
++
++@UtilityClass
++public class ChannelUtil
++{
++
++    private final String DISCARD_HANDLER = "discard-handler";
++
++    @SneakyThrows
++    public void shutdownChannel(Channel channel, Throwable t, boolean closeForcibly)
++    {
++        if ( closeForcibly )
++        {
++            channel.unsafe().closeForcibly();
++            return;
++        }
++        ChannelPipeline pipeline = channel.pipeline();
++        if ( pipeline.first() != ChannelDiscardHandler.INSTANCE )
++        {
++            channel.config().setAutoRead( false );
++            pipeline.addFirst( DISCARD_HANDLER, ChannelDiscardHandler.INSTANCE );
++            ByteToMessageDecoder frame = (ByteToMessageDecoder) pipeline.get( "frame-decoder" );
++            if ( frame != null )
++            {
++                frame.setSingleDecode( true );
++            }
++            ByteToMessageDecoder legacy = (ByteToMessageDecoder) pipeline.get( "legacy-decoder" );
++            if ( legacy != null )
++            {
++                legacy.setSingleDecode( true );
++            }
++            channel.close();
++            if ( Errors.isDebug() && t != null )
++            {
++                throw t;
++            }
++        }
++    }
++
++    public void shutdownChannel(Channel channel, Throwable t)
++    {
++        shutdownChannel( channel, t, false );
++    }
++}
+diff --git a/shared/src/main/java/com/mrivanplays/ivancord/shared/Errors.java b/shared/src/main/java/com/mrivanplays/ivancord/shared/Errors.java
+new file mode 100644
+index 00000000..15d4214c
+--- /dev/null
++++ b/shared/src/main/java/com/mrivanplays/ivancord/shared/Errors.java
+@@ -0,0 +1,73 @@
++package com.mrivanplays.ivancord.shared;
++
++import io.netty.buffer.ByteBuf;
++import io.netty.handler.codec.CorruptedFrameException;
++import lombok.experimental.UtilityClass;
++import net.md_5.bungee.util.QuietException;
++import net.md_5.bungee.util.BufUtil;
++
++@UtilityClass
++public class Errors
++{
++    private final boolean DEBUG = Boolean.getBoolean( "net.md_5.bungee.debug" );
++    private final QuietException INVALID_PROTOCOL = newError( "Invalid protocol requested" );
++    private final QuietException UNEXPECTED_LOGIN_PACKET = newError( "Invalid packet received during login process" );
++    private final QuietException UNEXPECTED_BUFFER_END = newError( "Buffer end reached unexpectedly" );
++    private final QuietException BAD_FRAME_LENGTH = newError( "length wider than 21-bit" );
++    private final QuietException DISCARD = newError( "Discard handler is added to the pipeline" );
++
++    public void invalidProtocol(int protocol)
++    {
++        if ( DEBUG )
++        {
++            throw new IllegalStateException( "Cannot request protocol " + protocol );
++        }
++        throw INVALID_PROTOCOL;
++    }
++
++    public void unexpectedLoginPacket(ByteBuf raw)
++    {
++        if ( DEBUG )
++        {
++            throw new IllegalStateException( "Unexpected packet received during login process! " + BufUtil.dump( raw, 16 ) );
++        }
++        throw UNEXPECTED_LOGIN_PACKET;
++    }
++
++    public void endOfBuffer()
++    {
++        if ( DEBUG )
++        {
++            throw new IllegalStateException( "Buffer end reached unexpectedly" );
++        }
++        throw UNEXPECTED_BUFFER_END;
++    }
++
++    public void badFrameLength()
++    {
++        if ( DEBUG )
++        {
++            throw new CorruptedFrameException( "length wider than 21-bit" );
++        }
++        throw BAD_FRAME_LENGTH;
++    }
++
++    public Exception discard()
++    {
++        if ( DEBUG )
++        {
++            return new IllegalStateException( "Discard handler is added to the pipeline" );
++        }
++        return DISCARD;
++    }
++
++    public boolean isDebug()
++    {
++        return DEBUG;
++    }
++
++    private QuietException newError(String message)
++    {
++        return new QuietException( message + " ; Enable debugging via -Dnet.md_5.bungee.debug=true for more info." );
++    }
++}
+diff --git a/proxy/src/main/java/net/md_5/bungee/util/BufUtil.java b/shared/src/main/java/net/md_5/bungee/util/BufUtil.java
+similarity index 100%
+rename from proxy/src/main/java/net/md_5/bungee/util/BufUtil.java
+rename to shared/src/main/java/net/md_5/bungee/util/BufUtil.java
+diff --git a/shared/src/main/java/net/md_5/bungee/util/QuietException.java b/shared/src/main/java/net/md_5/bungee/util/QuietException.java
+new file mode 100644
+index 00000000..cc344891
+--- /dev/null
++++ b/shared/src/main/java/net/md_5/bungee/util/QuietException.java
+@@ -0,0 +1,42 @@
++package net.md_5.bungee.util;
++
++/**
++ * Exception without a stack trace component.
++ */
++public class QuietException extends RuntimeException
++{
++
++    public QuietException(String message)
++    {
++        super( message );
++    }
++
++    // IvanCord start
++    public QuietException(String message, Throwable cause)
++    {
++        super( message, cause );
++    }
++
++    public QuietException(Throwable cause)
++    {
++        super( cause );
++    }
++
++    public QuietException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
++    {
++        super( message, cause, enableSuppression, writableStackTrace );
++    }
++    // IvanCord end
++
++    @Override
++    public Throwable initCause(Throwable cause)
++    {
++        return this;
++    }
++
++    @Override
++    public Throwable fillInStackTrace()
++    {
++        return this;
++    }
++}
+-- 
+2.23.0
+
