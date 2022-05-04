@@ -1,4 +1,4 @@
-From 307c183e3c53215310bb6c92d70c82952f2b124a Mon Sep 17 00:00:00 2001
+From a4c9d196075521116417a65942c91ecad09a14f5 Mon Sep 17 00:00:00 2001
 From: MrIvanPlays <pekov.ivan@abv.bg>
 Date: Mon, 22 Apr 2019 10:45:15 +0300
 Subject: [PATCH] (IvanCord) Kick to lobby support
@@ -52,7 +52,7 @@ index 06d74844..238bc3c1 100644
      }
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-index 20adce50..23c6a80b 100644
+index 194ada04..17109466 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 @@ -30,6 +30,7 @@ import net.md_5.bungee.ServerConnection.KeepAliveData;
@@ -63,7 +63,7 @@ index 20adce50..23c6a80b 100644
  import net.md_5.bungee.api.chat.BaseComponent;
  import net.md_5.bungee.api.chat.TextComponent;
  import net.md_5.bungee.api.config.ServerInfo;
-@@ -596,14 +597,46 @@ public class DownstreamBridge extends PacketHandler
+@@ -599,14 +600,46 @@ public class DownstreamBridge extends PacketHandler
          {
              def = null;
          }

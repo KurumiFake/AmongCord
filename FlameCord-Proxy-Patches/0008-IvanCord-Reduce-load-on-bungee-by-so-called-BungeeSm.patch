@@ -1,4 +1,4 @@
-From afb8f05ee092959391075fa87a6488eb4d1f9950 Mon Sep 17 00:00:00 2001
+From 4739a9449288a4c0496b46680a32e6df5f2d1a88 Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -188,7 +188,7 @@ index 581ff129..8c20859d 100644
  
      <build>
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 0665fb47..bbfec1d9 100644
+index 1b858792..152bc8e5 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -380,7 +380,7 @@ public class BungeeCord extends ProxyServer
@@ -249,7 +249,7 @@ index ce84f5b6..0a97e2d3 100644
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 7fa3217e..0ff6f9fd 100644
+index 2f029909..0243e5f4 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 @@ -152,9 +152,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
@@ -415,10 +415,10 @@ index a2086b45..e2f02dbc 100644
      }
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index eacc8aae..215b7e1e 100644
+index 6bf109f5..1d19c7bd 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-@@ -69,14 +69,14 @@ public class PipelineUtils
+@@ -74,14 +74,14 @@ public class PipelineUtils
  
              if ( BungeeCord.getInstance().getConnectionThrottle() != null && BungeeCord.getInstance().getConnectionThrottle().throttle( remoteAddress ) )
              {
@@ -435,7 +435,7 @@ index eacc8aae..215b7e1e 100644
                  return;
              }
  
-@@ -131,6 +131,11 @@ public class PipelineUtils
+@@ -136,6 +136,11 @@ public class PipelineUtils
      public static final String FRAME_PREPENDER = "frame-prepender";
      public static final String LEGACY_DECODER = "legacy-decoder";
      public static final String LEGACY_KICKER = "legacy-kick";
@@ -447,7 +447,7 @@ index eacc8aae..215b7e1e 100644
  
      private static boolean epoll;
  
-@@ -148,6 +153,13 @@ public class PipelineUtils
+@@ -153,6 +158,13 @@ public class PipelineUtils
                  ProxyServer.getInstance().getLogger().log( Level.WARNING, "Epoll is not working, falling back to NIO: {0}", Util.exception( Epoll.unavailabilityCause() ) );
              }
          }
@@ -461,7 +461,7 @@ index eacc8aae..215b7e1e 100644
      }
  
      public static EventLoopGroup newEventLoopGroup(int threads, ThreadFactory factory)
-@@ -155,6 +167,21 @@ public class PipelineUtils
+@@ -160,6 +172,21 @@ public class PipelineUtils
          return epoll ? new EpollEventLoopGroup( threads, factory ) : new NioEventLoopGroup( threads, factory );
      }
  
@@ -483,7 +483,7 @@ index eacc8aae..215b7e1e 100644
      public static Class<? extends ServerChannel> getServerChannel(SocketAddress address)
      {
          if ( address instanceof DomainSocketAddress )
-@@ -167,6 +194,21 @@ public class PipelineUtils
+@@ -172,6 +199,21 @@ public class PipelineUtils
          return epoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
      }
  
@@ -505,7 +505,7 @@ index eacc8aae..215b7e1e 100644
      public static Class<? extends Channel> getChannel(SocketAddress address)
      {
          if ( address instanceof DomainSocketAddress )
-@@ -179,6 +221,14 @@ public class PipelineUtils
+@@ -184,6 +226,14 @@ public class PipelineUtils
          return epoll ? EpollSocketChannel.class : NioSocketChannel.class;
      }
  
