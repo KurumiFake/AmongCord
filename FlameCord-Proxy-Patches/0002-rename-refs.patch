@@ -1,11 +1,11 @@
-From 423d93a920e200b6231ad1eaa38e256008f211af Mon Sep 17 00:00:00 2001
+From 67272e82f6f8276c145e12ff93d9853b4543bf5b Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:43:36 +0000
 Subject: [PATCH] rename refs
 
 
 diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
-index cbd16c34..3a64a84a 100644
+index 70ff2e8f..851b98e2 100644
 --- a/bootstrap/pom.xml
 +++ b/bootstrap/pom.xml
 @@ -37,7 +37,7 @@
@@ -30,6 +30,19 @@ index 9838f5c5..a4e6ad09 100644
              System.out.println( "You can check your Java version with the command: java -version" );
              return;
          }
+diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+index 31631626..8c93263b 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
++++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+@@ -184,7 +184,7 @@ public class FlameCordConfiguration extends FlameConfig {
+     @Getter
+     private boolean protocolEnabled = false;
+     @Getter
+-    private String protocolName = "FlameCord 1.7-1.18";
++    private String protocolName = "AmongCord 1.7-1.18";
+ 
+     @Getter
+     private boolean maxPlayersEnabled = false;
 diff --git a/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java b/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java
 index 49dce84b..89898144 100644
 --- a/log/src/main/java/net/md_5/bungee/log/LogDispatcher.java
@@ -44,7 +57,7 @@ index 49dce84b..89898144 100644
      }
  
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 3759b06f..5192d308 100644
+index 488bf3e6..dc0f040c 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer
@@ -80,5 +93,5 @@ index 5ab4db18..144ad77d 100644
      }
  }
 -- 
-2.30.2
+2.23.0
 

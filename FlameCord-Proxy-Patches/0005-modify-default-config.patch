@@ -1,9 +1,22 @@
-From a0a24dbab97357b0f5ecc99d2323665e3f5541ee Mon Sep 17 00:00:00 2001
+From ea4ffb81d3bb2a7fd37195ffa7cb9fe130e489dc Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 5 Mar 2022 04:57:55 +0000
 Subject: [PATCH] modify default config
 
 
+diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+index 8c93263b..b0c6c07d 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
++++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+@@ -34,7 +34,7 @@ public class FlameCordConfiguration extends FlameConfig {
+     @Getter
+     private boolean antibotCountryFirewall = true;
+     @Getter
+-    private Collection<String> antibotCountryBlacklist = Arrays.asList("CN", "HK", "RU", "IN", "TH", "ID", "DZ", "VN", "IR", "PK");
++    private Collection<String> antibotCountryBlacklist = Arrays.asList("CN", "HK", "RU", "IN", "TH", "ID", "DZ", "IR", "PK");
+     @Getter
+     private boolean antibotCountryLog = true;
+     @Getter
 diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 index ae4c7ac2..f99e0bc3 100644
 --- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
@@ -18,5 +31,5 @@ index ae4c7ac2..f99e0bc3 100644
      }
  
 -- 
-2.20.1
+2.23.0
 
