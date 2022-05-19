@@ -1,0 +1,62 @@
+From c4176e93a02a575cf8a5be714740cfaa0e0d8b4e Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 20 May 2022 00:19:05 +0700
+Subject: [PATCH] toggleable whitelist mode for FlameCord Antibot's country
+ check
+
+so instead of blocking sruff in the list it only allows stuff int eh list :spin:
+
+diff --git a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
+index 8507e1a7..cb9171a6 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
++++ b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
+@@ -56,15 +56,21 @@ public class CountryCheck {
+         }
+     }
+ 
++    // AmongCord start - toggleable contry whitelist
+     private boolean isBlacklisted(final FlameCordConfiguration config, final String isoCode) {
+         for (final String blacklisted : config.getAntibotCountryBlacklist()) {
+             if (isoCode.contains(blacklisted)) {
+-                return true;
++                if (!config.isAntibotCountryWhitelist()) {
++                    return true;
++                } else return false;
+             }
+         }
+ 
+-        return false;
++        if (!config.isAntibotCountryWhitelist()) {
++            return false;
++        } else return true;
+     }
++    // AmongCord end
+ 
+     public static class LookupResult {
+         private final Country country;
+diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+index b0c6c07d..959b1ac4 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
++++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
+@@ -37,6 +37,10 @@ public class FlameCordConfiguration extends FlameConfig {
+     private Collection<String> antibotCountryBlacklist = Arrays.asList("CN", "HK", "RU", "IN", "TH", "ID", "DZ", "IR", "PK");
+     @Getter
+     private boolean antibotCountryLog = true;
++    // AmongCord start - toggleable country whitelist
++    @Getter
++    private boolean antibotCountryWhitelist = false;
++    // AmongCord end
+     @Getter
+     private boolean antibotFastChatEnabled = true;
+     @Getter
+@@ -103,6 +107,7 @@ public class FlameCordConfiguration extends FlameConfig {
+         this.antibotCountryFirewall = setIfUnexistant("antibot.country.firewall", this.antibotCountryFirewall, config);
+         this.antibotCountryBlacklist = setIfUnexistant("antibot.country.blacklist", this.antibotCountryBlacklist, config);
+         this.antibotCountryLog = setIfUnexistant("antibot.country.log", this.antibotCountryLog, config);
++        this.antibotCountryWhitelist = setIfUnexistant("antibot.country.whitelist-in-list", this.antibotCountryWhitelist, config); // AmongCord
+         this.antibotFastChatEnabled = setIfUnexistant("antibot.fastchat.enabled", this.antibotFastChatEnabled, config);
+         this.antibotFastChatFirewall = setIfUnexistant("antibot.fastchat.firewall", this.antibotFastChatFirewall, config);
+         this.antibotFastChatTime = setIfUnexistant("antibot.fastchat.time", this.antibotFastChatTime, config);
+-- 
+2.23.0
+
