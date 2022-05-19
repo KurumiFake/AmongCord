@@ -1,4 +1,4 @@
-From 54a254cf7516a14d589be42d321317375944ca00 Mon Sep 17 00:00:00 2001
+From 0a3f5a4bc20e3b6e2f1717c3271726bbb0a53ae7 Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Tue, 11 Jan 2022 16:21:16 +0200
 Subject: [PATCH] (IvanCord) More DoS mitigations
@@ -72,28 +72,31 @@ index f33df1f3..a913a04a 100644
                  if ( in.readableBytes() < length )
                  {
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/packet/Handshake.java b/protocol/src/main/java/net/md_5/bungee/protocol/packet/Handshake.java
-index b7842055..8fc25d82 100644
+index b7842055..42abc819 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/packet/Handshake.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/packet/Handshake.java
-@@ -54,4 +54,20 @@ public class Handshake extends DefinedPacket
-     public int expectedMinLength(ByteBuf buf, ProtocolConstants.Direction direction, int protocolVersion) {
-         return 5; // FlameCord - Apply packet limits
+@@ -45,13 +45,19 @@ public class Handshake extends DefinedPacket
+         handler.handle( this );
      }
-+
+ 
 +    // IvanCord start
 +    public static int EXPECTED_MAX_LENGTH = 1292;
 +
-+    @Override
+     @Override
+-    public int expectedMaxLength(ByteBuf buf, ProtocolConstants.Direction direction, int protocolVersion) {
+-        return 1036 + 256; // FlameCord - Apply packet limits
 +    public int expectedMaxLength(ByteBuf buf, net.md_5.bungee.protocol.ProtocolConstants.Direction direction, int protocolVersion)
 +    {
 +        return EXPECTED_MAX_LENGTH;
-+    }
-+
-+    @Override
+     }
+ 
+     @Override
+-    public int expectedMinLength(ByteBuf buf, ProtocolConstants.Direction direction, int protocolVersion) {
+-        return 5; // FlameCord - Apply packet limits
 +    public int expectedMinLength(ByteBuf buf, net.md_5.bungee.protocol.ProtocolConstants.Direction direction, int protocolVersion)
 +    {
 +        return 5;
-+    }
+     }
 +    // IvanCord end
  }
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java b/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java
