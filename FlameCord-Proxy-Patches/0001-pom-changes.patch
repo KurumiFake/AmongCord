@@ -1,4 +1,4 @@
-From 7ee69340c5d1e9200edd502b41b04f7fdc8e309b Mon Sep 17 00:00:00 2001
+From 48f2495fb29d25f6e53bf9d0e7d9d822919c16e9 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 03:55:25 +0000
 Subject: [PATCH] pom changes
@@ -18,7 +18,7 @@ index 379b6023..3baf662f 100644
      </dependencies>
  </project>
 diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
-index cbd16c34..70ff2e8f 100644
+index cbd16c34..981765e6 100644
 --- a/bootstrap/pom.xml
 +++ b/bootstrap/pom.xml
 @@ -42,7 +42,7 @@
@@ -35,7 +35,7 @@ index cbd16c34..70ff2e8f 100644
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.3</version>
-+                <version>3.3.0</version>
++                <version>3.2.4</version>
                  <executions>
                      <execution>
                          <phase>package</phase>
@@ -111,7 +111,7 @@ index 127d0c14..24a5f780 100644
  
      <dependencies>
 diff --git a/pom.xml b/pom.xml
-index 45f14084..2e89d6ec 100644
+index 45f14084..7bb6a96e 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -89,8 +89,8 @@
@@ -121,7 +121,7 @@ index 45f14084..2e89d6ec 100644
 -        <lombok.version>1.18.22</lombok.version>
 -        <netty.version>4.1.72.Final</netty.version>
 +        <lombok.version>1.18.24</lombok.version>
-+        <netty.version>4.1.76.Final</netty.version>
++        <netty.version>4.1.77.Final</netty.version>
          <maven.compiler.source>1.8</maven.compiler.source>
          <maven.compiler.target>1.8</maven.compiler.target>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,6 +148,15 @@ index 45f14084..2e89d6ec 100644
                  <configuration>
                      <doclint>none</doclint>
                  </configuration>
+@@ -184,7 +184,7 @@
+             <plugin>
+                 <groupId>org.codehaus.mojo</groupId>
+                 <artifactId>animal-sniffer-maven-plugin</artifactId>
+-                <version>1.20</version>
++                <version>1.21</version>
+                 <executions>
+                     <execution>
+                         <phase>process-classes</phase>
 @@ -297,7 +297,7 @@
                      <plugin>
                          <groupId>org.apache.maven.plugins</groupId>
@@ -211,5 +220,5 @@ index 3df0498a..581ff129 100644
          </dependency>
          <!-- Waterfall end -->
 -- 
-2.30.2
+2.23.0
 
