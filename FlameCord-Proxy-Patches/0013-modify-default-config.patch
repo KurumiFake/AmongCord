@@ -1,4 +1,4 @@
-From ea4ffb81d3bb2a7fd37195ffa7cb9fe130e489dc Mon Sep 17 00:00:00 2001
+From dd26c21c884feade98fa85edce05c1e052d99a99 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 5 Mar 2022 04:57:55 +0000
 Subject: [PATCH] modify default config
@@ -17,6 +17,19 @@ index 8c93263b..b0c6c07d 100644
      @Getter
      private boolean antibotCountryLog = true;
      @Getter
+diff --git a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
+index c3934d73..3ef6a379 100644
+--- a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
++++ b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
+@@ -10,7 +10,7 @@ import net.md_5.bungee.conf.YamlConfig;
+ public class IvanCordConfiguration extends WaterfallConfiguration
+ {
+ 
+-    private boolean kickToLobby = true;
++    private boolean kickToLobby = false; // AmongCord
+     private String brand = "AmongCord"; // AmongCord
+ 
+     @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 index ae4c7ac2..f99e0bc3 100644
 --- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java

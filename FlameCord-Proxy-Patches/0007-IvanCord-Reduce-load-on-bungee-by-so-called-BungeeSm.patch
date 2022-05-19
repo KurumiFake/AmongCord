@@ -1,4 +1,4 @@
-From 4739a9449288a4c0496b46680a32e6df5f2d1a88 Mon Sep 17 00:00:00 2001
+From 2cb7dd4a0148166b053032e3ca151021ec149807 Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -188,7 +188,7 @@ index 581ff129..8c20859d 100644
  
      <build>
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 1b858792..152bc8e5 100644
+index 76827d53..79c84af4 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -380,7 +380,7 @@ public class BungeeCord extends ProxyServer
