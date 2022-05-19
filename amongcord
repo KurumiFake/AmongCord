@@ -20,7 +20,7 @@ case "$1" in
         scripts/wigglePatch.py
     ;;
     *)
-        echo "AmongCord build tool command. This provides a variety of commands to control the \yAmongCord"
+        echo "AmongCord build tool command. This provides a variety of commands to control the AmongCord"
         echo "build. View below for details of the available commands."
         echo ""
         echo "Commands:"

@@ -1,0 +1,78 @@
+From 58bc8bf6586e64a9ed2c900310c3615ab68535dd Mon Sep 17 00:00:00 2001
+From: MrIvanPlays <pekov.ivan@abv.bg>
+Date: Sat, 13 Apr 2019 20:32:49 +0300
+Subject: [PATCH] (IvanCord) Misc changes
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+index 0a97e2d3..5f66ab8d 100644
+--- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
++++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+@@ -324,6 +324,7 @@ public final class UserConnection implements ProxiedPlayer
+                 callback.done( ServerConnectRequest.Result.ALREADY_CONNECTED, null );
+             }
+ 
++            else // IvanCord - fix dumb connection message behaviour
+             if (request.isSendFeedback()) sendMessage( bungee.getTranslation( "already_connected" ) ); // Waterfall
+             return;
+         }
+@@ -334,6 +335,7 @@ public final class UserConnection implements ProxiedPlayer
+                 callback.done( ServerConnectRequest.Result.ALREADY_CONNECTING, null );
+             }
+ 
++            else // IvanCord - fix dumb connection message behaviour
+             if (request.isSendFeedback()) sendMessage( bungee.getTranslation( "already_connecting" ) ); // Waterfall
+             return;
+         }
+diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+index 0243e5f4..f84e6966 100644
+--- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
++++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+@@ -203,7 +203,18 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+                 }
+ 
+                 ServerPing legacy = result.getResponse();
+-
++                // IvanCord start - handle null legacy.getPlayers()
++                // such behavior is handled by modern pinging, yet it is not for
++                // legacy pinging. This causes A NPE whenever a < 1.7 MC client
++                // pings the proxy ( for whatever reason someone is using such a
++                // version )
++                if ( legacy.getPlayers() == null )
++                {
++                    // see https://github.com/SpigotMC/BungeeCord/issues/3192#issuecomment-966553225
++                    // as the reason why we set max and online to -1
++                    legacy.setPlayers( new ServerPing.Players( -1, -1, null ) );
++                }
++                // IvanCord end
+                 // FlameCord - Close and return if legacy == null
+                 if (legacy == null) {
+                     ch.close();
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
+index edaf6b74..163bba8f 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/ChannelWrapper.java
+@@ -62,7 +62,7 @@ public class ChannelWrapper
+ 
+     public void write(Object packet)
+     {
+-        if ( !closed )
++        if ( !closed && ch.isActive() ) // IvanCord
+         {
+             // IvanCord start - don't recompress unchanged packets - simplify
+             /*
+diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+index 1d19c7bd..05a23a12 100644
+--- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
++++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
+@@ -257,6 +257,7 @@ public class PipelineUtils
+                 // IP_TOS is not supported (Windows XP / Windows Server 2003)
+             }
+             ch.config().setOption( ChannelOption.TCP_NODELAY, true );
++            ch.config().setOption( ChannelOption.SO_KEEPALIVE, true ); // IvanCord
+             // FlameCord - TCP Fast Open
+             ch.config().setOption( ChannelOption.TCP_FASTOPEN, FlameCord.getInstance().getFlameCordConfiguration().getTcpFastOpen() );
+             ch.config().setAllocator( PooledByteBufAllocator.DEFAULT );
+-- 
+2.23.0
+
