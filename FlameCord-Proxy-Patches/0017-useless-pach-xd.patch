@@ -1,0 +1,132 @@
+From d653214a91706cd924f0071d51c4ee10864beb61 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 20 May 2022 07:18:57 +0700
+Subject: [PATCH] useless pach xd
+
+
+diff --git a/log4j/src/main/resources/log4j2-bungee.xml b/log4j/src/main/resources/log4j2-bungee.xml
+index 1c3265ed..f40ec266 100644
+--- a/log4j/src/main/resources/log4j2-bungee.xml
++++ b/log4j/src/main/resources/log4j2-bungee.xml
+@@ -4,17 +4,17 @@
+     <Appenders>
+         <TerminalConsole name="TerminalConsole">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="%highlightError{%d{HH:mm:ss} [%level] [%logger] %paperMinecraftFormatting{%msg}%n%ex}">
++                <LoggerNamePatternSelector defaultPattern="%highlightError{%d{HH:mm:ss} %level] %logger] %paperMinecraftFormatting{%msg}%n%ex}">
+                     <!-- Log root and BungeeCord loggers without prefix -->
+-                    <PatternMatch key=",BungeeCord" pattern="%highlightError{%d{HH:mm:ss} [%level] %paperMinecraftFormatting{%msg}%n%ex}" />
++                    <PatternMatch key=",BungeeCord" pattern="%highlightError{%d{HH:mm:ss} %level] %paperMinecraftFormatting{%msg}%n%ex}" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+         </TerminalConsole>
+         <RollingRandomAccessFile name="File" fileName="proxy.log.0" filePattern="proxy.log.%i" immediateFlush="false">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="%d{HH:mm:ss} [%level] [%logger] %paperMinecraftFormatting{%msg}{strip}%n%ex">
++                <LoggerNamePatternSelector defaultPattern="%d{HH:mm:ss} %level] %logger] %paperMinecraftFormatting{%msg}{strip}%n%ex">
+                     <!-- Log root and BungeeCord loggers without prefix -->
+-                    <PatternMatch key=",BungeeCord" pattern="%d{HH:mm:ss} [%level] %paperMinecraftFormatting{%msg}{strip}%n%ex" />
++                    <PatternMatch key=",BungeeCord" pattern="%d{HH:mm:ss} %level] %paperMinecraftFormatting{%msg}{strip}%n%ex" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+             <Policies>
+diff --git a/log4j/src/main/resources/log4j2.xml b/log4j/src/main/resources/log4j2.xml
+index 663bddec..32e89105 100644
+--- a/log4j/src/main/resources/log4j2.xml
++++ b/log4j/src/main/resources/log4j2.xml
+@@ -3,17 +3,17 @@
+     <Appenders>
+         <TerminalConsole name="TerminalConsole">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="%highlightError{[%d{HH:mm:ss} %level] [%logger]: %paperMinecraftFormatting{%msg}%n%xEx}">
++                <LoggerNamePatternSelector defaultPattern="%highlightError{%d{HH:mm:ss} %level] %logger]: %paperMinecraftFormatting{%msg}%n%xEx}">
+                     <!-- Log root and BungeeCord loggers without prefix -->
+-                    <PatternMatch key=",BungeeCord" pattern="%highlightError{[%d{HH:mm:ss} %level]: %paperMinecraftFormatting{%msg}%n%xEx}" />
++                    <PatternMatch key=",BungeeCord" pattern="%highlightError{%d{HH:mm:ss} %level]: %paperMinecraftFormatting{%msg}%n%xEx}" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+         </TerminalConsole>
+         <RollingRandomAccessFile name="File" fileName="logs/latest.log" filePattern="logs/%d{yyyy-MM-dd}-%i.log.gz" immediateFlush="false">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="[%d{HH:mm:ss}] [%t/%level] [%logger]: %paperMinecraftFormatting{%msg}{strip}%n">
++                <LoggerNamePatternSelector defaultPattern="%d{HH:mm:ss}] %t/%level] %logger]: %paperMinecraftFormatting{%msg}{strip}%n">
+                     <!-- Log root and BungeeCord loggers without prefix -->
+-                    <PatternMatch key=",BungeeCord" pattern="[%d{HH:mm:ss}] [%t/%level]: %paperMinecraftFormatting{%msg}{strip}%n" />
++                    <PatternMatch key=",BungeeCord" pattern="%d{HH:mm:ss}] %t/%level]: %paperMinecraftFormatting{%msg}{strip}%n" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+             <Policies>
+diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+index 5f66ab8d..078b26ba 100644
+--- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
++++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
+@@ -446,7 +446,7 @@ public final class UserConnection implements ProxiedPlayer
+     {
+         if ( !ch.isClosing() )
+         {
+-            bungee.getLogger().log( Level.INFO, "[{0}] disconnected with: {1}", new Object[]
++            bungee.getLogger().log( Level.INFO, "{0} disconnected : {1}", new Object[]
+             {
+                 getName(), BaseComponent.toLegacyText( reason )
+             } );
+diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+index f84e6966..53486b9b 100644
+--- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
++++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
+@@ -455,7 +455,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+                 {
+                     if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotRatelimitLog() )
+                     {
+-                        bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] is pinging too fast", ch.getRemoteAddress() );
++                        bungee.getLogger().log( Level.INFO, " > {0} is pinging too fast", ch.getRemoteAddress() );
+                     }
+ 
+                     disconnect( bungee.getTranslation( "antibot_ratelimit", addressData.getPingsSecond() ) );
+@@ -481,7 +481,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+                 {
+                     if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotRatelimitLog() )
+                     {
+-                        bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] is connecting too fast", ch.getRemoteAddress() );
++                        bungee.getLogger().log( Level.INFO, " > {0} is connecting too fast", ch.getRemoteAddress() );
+                     }
+ 
+                     disconnect( bungee.getTranslation( "antibot_ratelimit", addressData.getConnectionsSecond() ) );
+@@ -537,7 +537,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+         {
+             if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotAccountsLog() )
+             {
+-                bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] has too many accounts", ch.getRemoteAddress() );
++                bungee.getLogger().log( Level.INFO, " > {0} has too many accounts", ch.getRemoteAddress() );
+             }
+ 
+             disconnect( bungee.getTranslation( "antibot_accounts", addressData.getNicknames().size() ) );
+@@ -548,7 +548,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+         {
+             if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotNicknameLog() )
+             {
+-                bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] has a blacklisted nickname", ch.getRemoteAddress() );
++                bungee.getLogger().log( Level.INFO, " > {0} has blacklisted nickname", ch.getRemoteAddress() );
+             }
+ 
+             disconnect( bungee.getTranslation( "antibot_nickname", loginRequest.getData() ) );
+@@ -559,7 +559,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+         {
+             if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotReconnectLog() )
+             {
+-                bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] has to reconnect to join", ch.getRemoteAddress() );
++                bungee.getLogger().log( Level.INFO, " > {0} has to reconnect to join", ch.getRemoteAddress() );
+             }
+ 
+             disconnect( bungee.getTranslation( "antibot_reconnect", FlameCord.getInstance().getFlameCordConfiguration().getAntibotReconnectAttempts() - addressData.getTotalConnections() ) );
+@@ -570,7 +570,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+         {
+             if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotCountryLog() )
+             {
+-                bungee.getLogger().log( Level.INFO, "[FlameCord] [{0}] has his country blocked from the server", ch.getRemoteAddress() );
++                bungee.getLogger().log( Level.INFO, " > {0} is country blocked", ch.getRemoteAddress() );
+             }
+ 
+             disconnect( bungee.getTranslation( "antibot_country", addressData.getCountry() ) );
+-- 
+2.23.0
+
