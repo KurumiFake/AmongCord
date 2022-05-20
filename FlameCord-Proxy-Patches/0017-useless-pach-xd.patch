@@ -1,9 +1,22 @@
-From d653214a91706cd924f0071d51c4ee10864beb61 Mon Sep 17 00:00:00 2001
+From c18f53edc49f347af1ae265105cf0d9537921a7b Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 07:18:57 +0700
 Subject: [PATCH] useless pach xd
 
 
+diff --git a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
+index cb9171a6..4e55d558 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
++++ b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
+@@ -36,7 +36,7 @@ public class CountryCheck {
+ 
+         try {
+             if (!file.exists()) {
+-                System.out.println("Starting download of MaxMindDB (This will take some seconds...)");
++                System.out.println("Downloading MaxMindDB...");
+                 download(new URL("https://git.io/GeoLite2-Country.mmdb"), file);
+             }
+ 
 diff --git a/log4j/src/main/resources/log4j2-bungee.xml b/log4j/src/main/resources/log4j2-bungee.xml
 index 1c3265ed..f40ec266 100644
 --- a/log4j/src/main/resources/log4j2-bungee.xml
