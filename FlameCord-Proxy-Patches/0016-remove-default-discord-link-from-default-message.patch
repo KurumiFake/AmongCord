@@ -1,0 +1,37 @@
+From 89c961a9db037c42646da0153a25c043b3e82a94 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 20 May 2022 07:13:34 +0700
+Subject: [PATCH] remove default discord link from default message
+
+...so that ppl wont just go to 2ls's diacord complaining bout random sths...
+
+diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
+index a3be617d..8b64d26a 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
++++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
+@@ -83,14 +83,14 @@ public class MessagesConfiguration extends FlameConfig {
+ 			setIfUnexistant("illegal_chat_characters", "&cIllegal characters in chat ({0})", configuration);
+ 
+ 			// FlameCord start - Antibot System
+-			setIfUnexistant("antibot_accounts", "&c&lFlameCord\n\n&cYou have too many accounts! ({0})\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_fastchat", "&c&lFlameCord\n\n&cYou are chatting too fast!\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_firewall", "&c&lFlameCord\n\n&cYou are blocked from this server!\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_nickname", "&c&lFlameCord\n\n&cYour nickname was detected as bot! ({0})\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_password", "&c&lFlameCord\n\n&cYour password is used by other players! ({0})\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_ratelimit", "&c&lFlameCord\n\n&cYou are connecting too fast! ({0})\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_reconnect", "&c&lFlameCord\n\n&cReconnect {0} more times to enter!\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
+-			setIfUnexistant("antibot_country", "&c&lFlameCord\n\n&cYour country {0} is blacklisted!\n\n&cError? Contact us on discord.gg/gF36AT3", configuration);
++			setIfUnexistant("antibot_accounts", "&c&lFlameCord\n&cYou have too many accounts! ({0})", configuration);
++			setIfUnexistant("antibot_fastchat", "&c&lFlameCord\n&cYou are chatting too fast!", configuration);
++			setIfUnexistant("antibot_firewall", "&c&lFlameCord\n&cYou are blocked from this server!", configuration);
++			setIfUnexistant("antibot_nickname", "&c&lFlameCord\n&cYour nickname was detected as bot! ({0})", configuration);
++			setIfUnexistant("antibot_password", "&c&lFlameCord\n&cYour password is used by other players! ({0})", configuration);
++			setIfUnexistant("antibot_ratelimit", "&c&lFlameCord\n&cYou are connecting too fast! ({0})", configuration);
++			setIfUnexistant("antibot_reconnect", "&c&lFlameCord\n&cReconnect {0} more times to enter!", configuration);
++			setIfUnexistant("antibot_country", "&c&lFlameCord\n&cYour country {0} is blacklisted!", configuration);
+ 			// FlameCord end - Antibot System
+ 
+ 			// FlameCord
+-- 
+2.23.0
+
