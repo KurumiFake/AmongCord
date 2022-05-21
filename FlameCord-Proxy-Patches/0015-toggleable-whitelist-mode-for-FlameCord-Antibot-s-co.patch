@@ -1,4 +1,4 @@
-From c4176e93a02a575cf8a5be714740cfaa0e0d8b4e Mon Sep 17 00:00:00 2001
+From 5beb3b391a84cb2bb4add2adbeeb508f28d5a624 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 00:19:05 +0700
 Subject: [PATCH] toggleable whitelist mode for FlameCord Antibot's country
@@ -7,33 +7,38 @@ Subject: [PATCH] toggleable whitelist mode for FlameCord Antibot's country
 so instead of blocking sruff in the list it only allows stuff int eh list :spin:
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
-index 8507e1a7..cb9171a6 100644
+index 8507e1a7..37a60f21 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
-@@ -56,15 +56,21 @@ public class CountryCheck {
-         }
-     }
- 
-+    // AmongCord start - toggleable contry whitelist
-     private boolean isBlacklisted(final FlameCordConfiguration config, final String isoCode) {
-         for (final String blacklisted : config.getAntibotCountryBlacklist()) {
-             if (isoCode.contains(blacklisted)) {
--                return true;
-+                if (!config.isAntibotCountryWhitelist()) {
-+                    return true;
-+                } else return false;
+@@ -126,13 +126,22 @@ public class CountryCheck {
+                 addressData.setCountry(country);
              }
+ 
+-            if (country != null && isBlacklisted(config, country)) {
+-                if (config.isAntibotCountryFirewall()) {
+-                    addressData.firewall();
+-                }
+-
++            // AmongCord start - badly coded whitelist...
++            if (country != null} {
++                if (!config.isAntibotCountryWhitelist()) {
++                    if (isBlacklisted(config, country)) {
++                        if (config.isAntibotCountryFirewall()) {
++                            addressData.firewall();
++                        }
++                    }
++                } else {
++                    if (!isBlacklisted(config, country)) {
++                        if (config.isAntibotCountryFirewall()) {
++                            addressData.firewall();
++                        }
++                    }
+                 return true;
+-            }
++            } // AmongCord end
          }
  
--        return false;
-+        if (!config.isAntibotCountryWhitelist()) {
-+            return false;
-+        } else return true;
-     }
-+    // AmongCord end
- 
-     public static class LookupResult {
-         private final Country country;
+         return false;
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 index b0c6c07d..959b1ac4 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
