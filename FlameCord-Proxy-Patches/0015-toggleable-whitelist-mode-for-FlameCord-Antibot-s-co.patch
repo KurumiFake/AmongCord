@@ -1,4 +1,4 @@
-From 5beb3b391a84cb2bb4add2adbeeb508f28d5a624 Mon Sep 17 00:00:00 2001
+From dcea296cf4413031b054049996d55694de8292d8 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 00:19:05 +0700
 Subject: [PATCH] toggleable whitelist mode for FlameCord Antibot's country
@@ -7,7 +7,7 @@ Subject: [PATCH] toggleable whitelist mode for FlameCord Antibot's country
 so instead of blocking sruff in the list it only allows stuff int eh list :spin:
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
-index 8507e1a7..37a60f21 100644
+index 8507e1a7..e757ad30 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/antibot/CountryCheck.java
 @@ -126,13 +126,22 @@ public class CountryCheck {
@@ -20,7 +20,7 @@ index 8507e1a7..37a60f21 100644
 -                }
 -
 +            // AmongCord start - badly coded whitelist...
-+            if (country != null} {
++            if (country != null) {
 +                if (!config.isAntibotCountryWhitelist()) {
 +                    if (isBlacklisted(config, country)) {
 +                        if (config.isAntibotCountryFirewall()) {
