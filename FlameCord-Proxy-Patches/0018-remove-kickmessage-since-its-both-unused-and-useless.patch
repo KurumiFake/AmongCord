@@ -1,4 +1,4 @@
-From 53621aa7772687e03741d2cfcf76ff78776e48b6 Mon Sep 17 00:00:00 2001
+From 2ebabdbfb469820bffa3a86947670269c1479f0c Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 21 May 2022 21:35:40 +0700
 Subject: [PATCH] remove kickmessage since its both unused and useless... for
@@ -6,7 +6,7 @@ Subject: [PATCH] remove kickmessage since its both unused and useless... for
 
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-index 08e7c244..796f4238 100644
+index 08e7c244..8b8eea66 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 @@ -605,9 +605,9 @@ public class DownstreamBridge extends PacketHandler
@@ -43,6 +43,15 @@ index 08e7c244..796f4238 100644
                  }
              }
          } else
+@@ -636,7 +636,7 @@ public class DownstreamBridge extends PacketHandler
+                 con.connectNow( event.getCancelServer(), ServerConnectEvent.Reason.KICK_REDIRECT );
+             } else
+             {
+-                con.disconnect0( kickMessage );
++                con.disconnect0( event.getKickReasonComponent() ); // AmongCord
+             }
+         }
+         // IvanCord end
 -- 
 2.23.0
 
