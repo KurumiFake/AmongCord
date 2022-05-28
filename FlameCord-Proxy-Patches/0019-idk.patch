@@ -1,4 +1,4 @@
-From 3e65226ddcfb4472cba585fbe73b17b232e7bf93 Mon Sep 17 00:00:00 2001
+From 1d7e69a41be216138f6d728a8e5f9f570ff48da8 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 28 May 2022 22:44:16 +0700
 Subject: [PATCH] idk
@@ -42,7 +42,7 @@ index d1358559..41002528 100644
  
      <build>
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
-index 8e59720f..3469e309 100644
+index 8e59720f..759118d6 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
 @@ -2,10 +2,14 @@ package net.md_5.bungee.protocol;
@@ -55,10 +55,10 @@ index 8e59720f..3469e309 100644
  import gnu.trove.map.hash.TIntObjectHashMap;
 -import gnu.trove.map.hash.TObjectIntHashMap;
 +import gnu.trove.map.hash.TObjectIntHashMap;*/
-+import it.unimi.dsi.fastutil.objects.Int2ObjectOpenHashMap;
++import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 +import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 +import it.unimi.dsi.fastutil.objects.Object2IntMap;
-+import it.unimi.dsi.fastutil.objects.Int2ObjectMap;
++import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
  import java.util.function.Supplier;
  import lombok.Data;
  import lombok.Getter;
@@ -81,7 +81,7 @@ index 8e59720f..3469e309 100644
          private final Protocol protocolPhase;
          @Getter
 diff --git a/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java b/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
-index fd0dabcf..62d3d8cd 100644
+index fd0dabcf..d7466ba4 100644
 --- a/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
 @@ -5,8 +5,10 @@ import com.google.common.collect.HashMultimap;
@@ -92,8 +92,8 @@ index fd0dabcf..62d3d8cd 100644
 -import gnu.trove.map.hash.TIntObjectHashMap;
 +/*import gnu.trove.map.TIntObjectMap;
 +import gnu.trove.map.hash.TIntObjectHashMap;*/
-+import it.unimi.dsi.fastutil.objects.Int2ObjectMap;
-+import it.unimi.dsi.fastutil.objects.Int2ObjectOpenHashMap;
++import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
++import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
  import java.util.HashSet;
  import java.util.Set;
  import java.util.concurrent.ExecutorService;
