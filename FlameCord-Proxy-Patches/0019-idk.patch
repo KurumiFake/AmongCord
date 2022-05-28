@@ -1,0 +1,95 @@
+From e1bc115adfa256b5dd569b210de1af1b90ece077 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Sat, 28 May 2022 22:44:16 +0700
+Subject: [PATCH] idk
+
+
+diff --git a/flamecord/src/main/java/dev/_2lstudios/antibot/AddressDataManager.java b/flamecord/src/main/java/dev/_2lstudios/antibot/AddressDataManager.java
+index 3f6e4186..6ca7711a 100644
+--- a/flamecord/src/main/java/dev/_2lstudios/antibot/AddressDataManager.java
++++ b/flamecord/src/main/java/dev/_2lstudios/antibot/AddressDataManager.java
+@@ -2,11 +2,13 @@ package dev._2lstudios.antibot;
+ 
+ import java.net.InetSocketAddress;
+ import java.net.SocketAddress;
+-import java.util.HashMap;
+-import java.util.Map;
++/*import java.util.HashMap;
++import java.util.Map;*/
++import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
++import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+ 
+ public class AddressDataManager {
+-    private final Map<String, AddressData> addressData = new HashMap<>();
++    private final Object2ObjectMap<String, AddressData> addressData = new Object2ObjectOpenHashMap<>();
+ 
+     public AddressData getAddressData(final SocketAddress address) {
+         final InetSocketAddress iNetSocketAddress = (InetSocketAddress) address;
+diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
+index 8e59720f..3469e309 100644
+--- a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
++++ b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
+@@ -2,10 +2,14 @@ package net.md_5.bungee.protocol;
+ 
+ import com.google.common.base.Preconditions;
+ import com.google.common.collect.Iterables;
+-import gnu.trove.map.TIntObjectMap;
++/*import gnu.trove.map.TIntObjectMap;
+ import gnu.trove.map.TObjectIntMap;
+ import gnu.trove.map.hash.TIntObjectHashMap;
+-import gnu.trove.map.hash.TObjectIntHashMap;
++import gnu.trove.map.hash.TObjectIntHashMap;*/
++import it.unimi.dsi.fastutil.objects.Int2ObjectOpenHashMap;
++import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
++import it.unimi.dsi.fastutil.objects.Object2IntMap;
++import it.unimi.dsi.fastutil.objects.Int2ObjectMap;
+ import java.util.function.Supplier;
+ import lombok.Data;
+ import lombok.Getter;
+@@ -473,7 +477,7 @@ public enum Protocol
+     {
+ 
+         private final int protocolVersion;
+-        private final TObjectIntMap<Class<? extends DefinedPacket>> packetMap = new TObjectIntHashMap<>( MAX_PACKET_ID );
++        private final Object2IntMap<Class<? extends DefinedPacket>> packetMap = new Object2IntOpenHashMap<>( MAX_PACKET_ID );
+         @SuppressWarnings("unchecked")
+         private final Supplier<? extends DefinedPacket>[] packetConstructors = new Supplier[ MAX_PACKET_ID ];
+     }
+@@ -495,7 +499,7 @@ public enum Protocol
+     static final class DirectionData
+     {
+ 
+-        private final TIntObjectMap<ProtocolData> protocols = new TIntObjectHashMap<>();
++        private final Int2ObjectMap<ProtocolData> protocols = new Int2ObjectOpenHashMap<>();
+         //
+         private final Protocol protocolPhase;
+         @Getter
+diff --git a/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java b/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
+index fd0dabcf..62d3d8cd 100644
+--- a/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
++++ b/proxy/src/main/java/net/md_5/bungee/scheduler/BungeeScheduler.java
+@@ -5,8 +5,10 @@ import com.google.common.collect.HashMultimap;
+ import com.google.common.collect.Multimap;
+ import com.google.common.collect.Multimaps;
+ import gnu.trove.TCollections;
+-import gnu.trove.map.TIntObjectMap;
+-import gnu.trove.map.hash.TIntObjectHashMap;
++/*import gnu.trove.map.TIntObjectMap;
++import gnu.trove.map.hash.TIntObjectHashMap;*/
++import it.unimi.dsi.fastutil.objects.Int2ObjectMap;
++import it.unimi.dsi.fastutil.objects.Int2ObjectOpenHashMap;
+ import java.util.HashSet;
+ import java.util.Set;
+ import java.util.concurrent.ExecutorService;
+@@ -21,7 +23,7 @@ public class BungeeScheduler implements TaskScheduler
+ 
+     private final Object lock = new Object();
+     private final AtomicInteger taskCounter = new AtomicInteger();
+-    private final TIntObjectMap<BungeeTask> tasks = TCollections.synchronizedMap( new TIntObjectHashMap<BungeeTask>() );
++    private final Int2ObjectMap<BungeeTask> tasks = TCollections.synchronizedMap( new Int2ObjectOpenHashMap<BungeeTask>() );
+     private final Multimap<Plugin, BungeeTask> tasksByPlugin = Multimaps.synchronizedMultimap( HashMultimap.<Plugin, BungeeTask>create() );
+     //
+     private final Unsafe unsafe = new Unsafe()
+-- 
+2.23.0
+
