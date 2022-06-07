@@ -1,11 +1,11 @@
-From 67272e82f6f8276c145e12ff93d9853b4543bf5b Mon Sep 17 00:00:00 2001
+From 3c810ae72ce3ffac9750d262a78672fa412de6c3 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:43:36 +0000
 Subject: [PATCH] rename refs
 
 
 diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
-index 70ff2e8f..851b98e2 100644
+index 981765e6..ee15ce11 100644
 --- a/bootstrap/pom.xml
 +++ b/bootstrap/pom.xml
 @@ -37,7 +37,7 @@
@@ -57,7 +57,7 @@ index 49dce84b..89898144 100644
      }
  
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 488bf3e6..dc0f040c 100644
+index b345c47c..d207f8e9 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer

@@ -1,4 +1,4 @@
-From 2cb7dd4a0148166b053032e3ca151021ec149807 Mon Sep 17 00:00:00 2001
+From 5baf7d8b9c2d17b36213e790adbbd7de18c222ea Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -9,7 +9,7 @@ Co-Authored by: MrIvanPlays <ivan@mrivanplays.com> - ported to IvanCord
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/pom.xml b/pom.xml
-index 2e89d6ec..e57affcf 100644
+index 7bb6a96e..d1358559 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -64,6 +64,7 @@
@@ -352,7 +352,7 @@ index 606866a5..65f00283 100644
      {
          if ( !closed )
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
-index a2086b45..e2f02dbc 100644
+index c737482e..794ad97a 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
 @@ -29,6 +29,11 @@ import net.md_5.bungee.util.QuietException;

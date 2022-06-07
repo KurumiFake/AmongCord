@@ -32,7 +32,7 @@ function savePatches {
     target=$2
     echo "Formatting patches for $what..."
 
-    cd "$basedir/${what_name}-Patches/"
+    cd "$basedir/patches/"
     if [ -d "$basedir/$target/.git/rebase-apply" ]; then
         # in middle of a rebase, be smarter
         echo "REBASE DETECTED - PARTIAL SAVE"
@@ -50,11 +50,11 @@ function savePatches {
 
     cd "$basedir/$target"
 
-    git format-patch --no-stat -N -o "$basedir/${what_name}-Patches/" upstream/upstream >/dev/null
+    git format-patch --no-stat -N -o "$basedir/patches/" upstream/upstream >/dev/null
     cd "$basedir"
-    git add -A "$basedir/${what_name}-Patches"
-    cleanupPatches "$basedir/${what_name}-Patches"
-    echo "  Patches saved for $what to $what_name-Patches/"
+    git add -A "$basedir/patches"
+    cleanupPatches "$basedir/patches"
+    echo "  Patches saved for $what to patches/"
 }
 
 savePatches "FlameCord/FlameCord-Proxy" "AmongCord-Proxy"

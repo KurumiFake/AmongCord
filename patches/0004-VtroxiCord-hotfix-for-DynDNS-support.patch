@@ -1,4 +1,4 @@
-From 71f8a3197e5c104aa20474e3e97dade290693ac5 Mon Sep 17 00:00:00 2001
+From ca36b5c9f4f5ec65f10b0847dfffd632b33ee2ec Mon Sep 17 00:00:00 2001
 From: Vtroxi <39201813+vtroxi@users.noreply.github.com>
 Date: Thu, 20 May 2021 11:34:22 +0200
 Subject: [PATCH] (VtroxiCord) hotfix for DynDNS support
@@ -120,5 +120,5 @@ index 3b5ce41e..7fec9756 100644
      @Deprecated
      public String getFavicon()
 -- 
-2.30.2
+2.23.0
 

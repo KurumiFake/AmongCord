@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+cd FlameCord
+./flamecord patch || exit 1
+cd ..
+
 PS1="$"
 basedir="$(cd "$1" && pwd -P)"
 workdir="$basedir/work"
@@ -40,7 +44,7 @@ function applyPatch {
     echo "  Applying patches to $target..."
 
     git am --abort >/dev/null 2>&1
-    git am --3way --ignore-whitespace "$basedir/${what_name}-Patches/"*.patch
+    git am --3way --ignore-whitespace "$basedir/patches/"*.patch
     if [ "$?" != "0" ]; then
         echo "  Something did not apply cleanly to $target."
         echo "  Please review above details and finish the apply then"
@@ -59,19 +63,6 @@ if [[ "$gpgsign" == "true" ]]; then
     echo "_Temporarily_ disabling GPG signing"
     git config --global commit.gpgsign false
 fi
-
-# Apply waterfall patches
-basedir=$basedir/FlameCord/Waterfall
-pushd Waterfall
-applyPatch BungeeCord Waterfall-Proxy HEAD
-popd
-basedir=$(dirname "$basedir")
-
-# Apply flamecord patches
-pushd FlameCord
-applyPatch Waterfall/Waterfall-Proxy FlameCord-Proxy HEAD
-popd
-basedir=$(dirname "$basedir")
 
 # applily amongcord patches
 applyPatch FlameCord/FlameCord-Proxy AmongCord-Proxy HEAD
