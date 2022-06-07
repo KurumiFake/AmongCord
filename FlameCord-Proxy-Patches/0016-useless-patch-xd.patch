@@ -1,4 +1,4 @@
-From 7af7fc361f5a87aeac55dd060c1a2b7fd34bde79 Mon Sep 17 00:00:00 2001
+From 5941a0b5fcea351683da02d2a086169ca2129f17 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 07:18:57 +0700
 Subject: [PATCH] useless patch xd
@@ -163,7 +163,7 @@ index 52e1ff35..24639859 100644
  
              con.disconnect( bungee.getTranslation( "antibot_password", checkManager.getPasswordCheck().getRepeatCount() ) );
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index 0e6741db..1f0fc927 100644
+index 0e6741db..3f96b5d6 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 @@ -64,7 +64,7 @@ public class PipelineUtils
@@ -175,6 +175,20 @@ index 0e6741db..1f0fc927 100644
                  }
  
                  ch.close();
+@@ -149,11 +149,11 @@ public class PipelineUtils
+     {
+         if ( !PlatformDependent.isWindows() && Boolean.parseBoolean( System.getProperty( "bungee.epoll", "true" ) ) )
+         {
+-            ProxyServer.getInstance().getLogger().info( "Not on Windows, attempting to use enhanced EpollEventLoop" );
++            ProxyServer.getInstance().getLogger().info( "Attempting to use enhanced EpollEventLoop" );
+ 
+             if ( epoll = Epoll.isAvailable() )
+             {
+-                ProxyServer.getInstance().getLogger().info( "Epoll is working, utilising it!" );
++                ProxyServer.getInstance().getLogger().info( "Epoll is working." );
+             } else
+             {
+                 ProxyServer.getInstance().getLogger().log( Level.WARNING, "Epoll is not working, falling back to NIO: {0}", Util.exception( Epoll.unavailabilityCause() ) );
 -- 
 2.23.0
 
