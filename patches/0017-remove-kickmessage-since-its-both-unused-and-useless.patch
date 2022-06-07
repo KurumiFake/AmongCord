@@ -1,4 +1,4 @@
-From 23e39740d1698e1f9fc874762967c0b5c0b01fa2 Mon Sep 17 00:00:00 2001
+From 37541c4e60164ae66cbf7dfd27a82a49df598e70 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 21 May 2022 21:35:40 +0700
 Subject: [PATCH] remove kickmessage since its both unused and useless... for

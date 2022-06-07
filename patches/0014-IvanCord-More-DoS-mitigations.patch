@@ -1,4 +1,4 @@
-From 5a197c828f8d5f5aeb0ebf52e90d1a962c4ea6a3 Mon Sep 17 00:00:00 2001
+From 6f6cc25204586a8a4b94f766f6905f2899fd5e08 Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Tue, 11 Jan 2022 16:21:16 +0200
 Subject: [PATCH] (IvanCord) More DoS mitigations
