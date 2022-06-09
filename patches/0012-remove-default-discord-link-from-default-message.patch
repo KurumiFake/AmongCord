@@ -1,4 +1,4 @@
-From 19cc1a56744fc8a3a7bd99efb15014b069d0daba Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 07:13:34 +0700
 Subject: [PATCH] remove default discord link from default message
@@ -32,6 +32,3 @@ index f994f40e..a641a681 100644
  			// FlameCord end - Antibot System
  
  			// FlameCord
--- 
-2.23.0
-

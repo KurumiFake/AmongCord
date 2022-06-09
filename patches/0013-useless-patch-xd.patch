@@ -1,4 +1,4 @@
-From 85bb1cf717e03075a75bf58f6c0dd181df7d3100 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 20 May 2022 07:18:57 +0700
 Subject: [PATCH] useless patch xd
@@ -189,6 +189,3 @@ index 0e6741db..3f96b5d6 100644
              } else
              {
                  ProxyServer.getInstance().getLogger().log( Level.WARNING, "Epoll is not working, falling back to NIO: {0}", Util.exception( Epoll.unavailabilityCause() ) );
--- 
-2.23.0
-

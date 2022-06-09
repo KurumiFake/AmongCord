@@ -1,4 +1,4 @@
-From 23e39740d1698e1f9fc874762967c0b5c0b01fa2 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Sat, 21 May 2022 21:35:40 +0700
 Subject: [PATCH] remove kickmessage since its both unused and useless... for
@@ -52,6 +52,3 @@ index 08e7c244..8b8eea66 100644
              }
          }
          // IvanCord end
--- 
-2.23.0
-

@@ -1,4 +1,4 @@
-From 2d280f9c930541bfe1bec5d1024684938a71d4d9 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Tue, 11 Jan 2022 16:21:16 +0200
 Subject: [PATCH] (IvanCord) More DoS mitigations
@@ -204,6 +204,3 @@ index 15d4214c..2e1efdac 100644
  
      public void invalidProtocol(int protocol)
      {
--- 
-2.23.0
-

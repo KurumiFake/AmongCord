@@ -1,4 +1,4 @@
-From 3f7d4e261f51b596395c9166d13d565c821674e2 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Fri, 18 Feb 2022 05:49:12 +0000
 Subject: [PATCH] rebrand
@@ -38,6 +38,3 @@ index b1ecb7ef..cbe24c87 100644
                      bungee.getOnlineCount(), listener.getMaxPlayers(), listener.getHost().getPort(),
                      listener.getHost().getHostString(), "MINECRAFT",  players, bungee.getGameVersion()));
              QueryResult result = bungee.getPluginManager().callEvent(event).getResult();
--- 
-2.23.0
-

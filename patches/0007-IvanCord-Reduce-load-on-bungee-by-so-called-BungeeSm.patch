@@ -1,4 +1,4 @@
-From 707494c6cde62c72dcf36769b0d86cafc5906953 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Wed, 29 Jul 2020 16:07:27 +0300
 Subject: [PATCH] (IvanCord) Reduce load on bungee by so-called
@@ -847,6 +847,3 @@ index 00000000..cc344891
 +        return this;
 +    }
 +}
--- 
-2.23.0
-

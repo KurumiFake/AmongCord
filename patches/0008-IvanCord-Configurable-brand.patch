@@ -1,4 +1,4 @@
-From 513a705e9dee87416782fdaeb78f603ad98a63ce Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: MrIvanPlays <ivan@mrivanplays.com>
 Date: Tue, 16 Jun 2020 10:54:03 +0300
 Subject: [PATCH] (IvanCord) Configurable brand
@@ -43,7 +43,7 @@ index 238bc3c1..c3934d73 100644
 +
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
-index d2bf095a..af4b9ecc 100644
+index c0b42ee2..0ea3fc77 100644
 --- a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 +++ b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 @@ -279,7 +279,7 @@ public class ServerConnector extends PacketHandler
@@ -86,6 +86,3 @@ index 17109466..08e7c244 100644
              }
              // FlameCord end - 1.7.x support
              // changes in the packet are ignored so we need to send it manually
--- 
-2.23.0
-
