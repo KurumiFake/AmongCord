@@ -1,4 +1,4 @@
-From 5a197c828f8d5f5aeb0ebf52e90d1a962c4ea6a3 Mon Sep 17 00:00:00 2001
+From 2d280f9c930541bfe1bec5d1024684938a71d4d9 Mon Sep 17 00:00:00 2001
 From: Janmm14 <gitconfig1@janmm14.de>
 Date: Tue, 11 Jan 2022 16:21:16 +0200
 Subject: [PATCH] (IvanCord) More DoS mitigations
@@ -100,10 +100,10 @@ index b7842055..42abc819 100644
 +    // IvanCord end
  }
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java b/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java
-index cfd8e64e..bb681e27 100644
+index 836b4722..c6c8585c 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/packet/LoginRequest.java
-@@ -37,10 +37,13 @@ public class LoginRequest extends DefinedPacket
+@@ -47,11 +47,14 @@ public class LoginRequest extends DefinedPacket
      }
  
      // Waterfall start: Additional DoS mitigations, courtesy of Velocity
@@ -113,6 +113,7 @@ index cfd8e64e..bb681e27 100644
      public int expectedMaxLength(ByteBuf buf, ProtocolConstants.Direction direction, int protocolVersion) {
          // Accommodate the rare (but likely malicious) use of UTF-8 usernames, since it is technically
          // legal on the protocol level.
+         if (protocolVersion >= ProtocolConstants.MINECRAFT_1_19) return -1;
 -        return 1 + (16 * 4);
 +        return EXPECTED_MAX_LENGTH; // IvanCord
      }

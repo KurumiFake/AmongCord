@@ -1,4 +1,4 @@
-From 2d9973bca5b79abb3de6edde9da7b41951feead2 Mon Sep 17 00:00:00 2001
+From 6836f77e9234caf410d34fe9316ce50ba838a42a Mon Sep 17 00:00:00 2001
 From: MrIvanPlays <pekov.ivan@abv.bg>
 Date: Mon, 22 Apr 2019 10:45:15 +0300
 Subject: [PATCH] (IvanCord) Kick to lobby support
@@ -26,10 +26,10 @@ index abcf06bb..ae9540ce 100644
 +    // IvanCord end
  }
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
-index 1ba8c8a5..a3be617d 100644
+index f0179062..f994f40e 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
-@@ -100,6 +100,10 @@ public class MessagesConfiguration extends FlameConfig {
+@@ -101,6 +101,10 @@ public class MessagesConfiguration extends FlameConfig {
  					configuration);
  			setIfUnexistant("flamecord_nopermission", "&cYou don't have permission to do this!", configuration);
  
@@ -40,7 +40,7 @@ index 1ba8c8a5..a3be617d 100644
  			configurationProvider.save(configuration, configurationFile);
  
  			for (final String key : configuration.getKeys()) {
-@@ -122,4 +126,4 @@ public class MessagesConfiguration extends FlameConfig {
+@@ -123,4 +127,4 @@ public class MessagesConfiguration extends FlameConfig {
  
  		return MessageFormat.format(messages.getOrDefault(name, "<translation '" + name + "' missing>"), args);
  	}
@@ -137,10 +137,10 @@ index 194ada04..17109466 100644
          throw CancelSendSignal.INSTANCE;
      }
 diff --git a/proxy/src/main/resources/messages.properties b/proxy/src/main/resources/messages.properties
-index e16cf0a8..6a60e8d5 100644
+index 2b05a2dd..0ba2426e 100644
 --- a/proxy/src/main/resources/messages.properties
 +++ b/proxy/src/main/resources/messages.properties
-@@ -36,3 +36,4 @@ command_perms_groups=\u00a76You have the following groups: {0}
+@@ -39,3 +39,4 @@ command_perms_groups=\u00a76You have the following groups: {0}
  command_perms_permission=\u00a79- {0}
  command_ip=\u00a79IP of {0} is {1}
  illegal_chat_characters=\u00a7cillegal characters in chat ({0})
