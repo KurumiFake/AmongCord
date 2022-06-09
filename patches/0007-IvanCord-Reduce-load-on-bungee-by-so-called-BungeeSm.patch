@@ -577,7 +577,7 @@ index 8becc26a..f9e1cd5f 100644
          new Bootstrap()
 diff --git a/shared/pom.xml b/shared/pom.xml
 new file mode 100644
-index 00000000..c50d7e31
+index 00000000..fedb115d
 --- /dev/null
 +++ b/shared/pom.xml
 @@ -0,0 +1,37 @@
@@ -588,14 +588,14 @@ index 00000000..c50d7e31
 +    <parent>
 +        <groupId>io.github.waterfallmc</groupId>
 +        <artifactId>waterfall-parent</artifactId>
-+        <version>1.18-R0.1-SNAPSHOT</version>
++        <version>1.19-R0.1-SNAPSHOT</version>
 +        <relativePath>../pom.xml</relativePath>
 +    </parent>
 +    <modelVersion>4.0.0</modelVersion>
 +
 +    <groupId>com.mrivanplays</groupId>
 +    <artifactId>ivancord-shared</artifactId>
-+    <version>1.18-R0.1-SNAPSHOT</version>
++    <version>1.19-R0.1-SNAPSHOT</version>
 +    <packaging>jar</packaging>
 +
 +    <name>IvanCord-Shared</name>
