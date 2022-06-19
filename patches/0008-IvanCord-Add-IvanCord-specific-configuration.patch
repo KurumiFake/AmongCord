@@ -30,7 +30,7 @@ index 00000000..06d74844
 +    }
 +}
 diff --git a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
-index a008b132..18c39529 100644
+index 966d2442..d3618dfa 100644
 --- a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
 +++ b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
 @@ -7,7 +7,7 @@ import net.md_5.bungee.protocol.ProtocolConstants;
@@ -43,7 +43,7 @@ index a008b132..18c39529 100644
      /**
       * Whether we log InitialHandler connections
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index ee5cc7c7..280d2874 100644
+index ffb10f92..19b858a1 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -119,7 +119,7 @@ public class BungeeCord extends ProxyServer

@@ -51,7 +51,7 @@ index f20104a2..951adc0d 100644
      private static final boolean PROCESS_TRACES = Boolean.getBoolean("waterfall.bad-packet-traces");
  
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java b/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
-index 8efe1ef0..344b8b13 100644
+index bafef27c..adace294 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/DefinedPacket.java
 @@ -153,8 +153,13 @@ public abstract class DefinedPacket
@@ -90,10 +90,10 @@ index e2e34a34..b3f96f82 100644
      }
  }
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-index 074d2437..4324a266 100644
+index 3992f521..e1852173 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-@@ -65,6 +65,13 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -64,6 +64,13 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              // Waterfall end
  
              int packetId = DefinedPacket.readVarInt( in );
@@ -107,7 +107,7 @@ index 074d2437..4324a266 100644
              packetTypeInfo = packetId;
              // FlameCord Start - Check if packetId is invalid.
              if (packetId < 0 || packetId > Protocol.MAX_PACKET_ID)
-@@ -77,7 +84,18 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -76,7 +83,18 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              {
                  packetTypeInfo = packet.getClass();
                  doLengthSanityChecks(in, packet, prot.getDirection(), packetId); // Waterfall: Additional DoS mitigations
@@ -126,7 +126,7 @@ index 074d2437..4324a266 100644
  
                  if ( in.isReadable() )
                  {
-@@ -86,7 +104,14 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -85,7 +103,14 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
                          throw PACKET_NOT_READ_TO_END;
                      }
                      // Waterfall end
@@ -188,10 +188,10 @@ index 8d7a612e..441d74de 100644
  
      <!-- Waterfall start - copy license files into jar -->
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 280d2874..192b6415 100644
+index 19b858a1..99f0384d 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-@@ -380,7 +380,7 @@ public class BungeeCord extends ProxyServer
+@@ -372,7 +372,7 @@ public class BungeeCord extends ProxyServer
                  }
              };
              new ServerBootstrap()
@@ -200,7 +200,7 @@ index 280d2874..192b6415 100644
                      .option( ChannelOption.SO_REUSEADDR, true ) // TODO: Move this elsewhere!
                      .childAttr( PipelineUtils.LISTENER, info )
                      .childHandler( PipelineUtils.SERVER_CHILD )
-@@ -407,7 +407,7 @@ public class BungeeCord extends ProxyServer
+@@ -399,7 +399,7 @@ public class BungeeCord extends ProxyServer
                          }
                      }
                  };
@@ -236,10 +236,10 @@ index 35d53325..25c321a1 100644
                  {
                      @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index caac045c..450cd5b6 100644
+index 238995e5..4498a8e9 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -399,7 +399,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -402,7 +402,7 @@ public final class UserConnection implements ProxiedPlayer
              }
          };
          Bootstrap b = new Bootstrap()
@@ -249,10 +249,10 @@ index caac045c..450cd5b6 100644
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 6429aa9c..cc7c34d5 100644
+index 92288714..379fa7dc 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-@@ -154,9 +154,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -151,9 +151,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          if ( canSendKickMessage() )
          {
              disconnect( ChatColor.RED + Util.exception( t ) );
@@ -264,7 +264,7 @@ index 6429aa9c..cc7c34d5 100644
          }
      }
  
-@@ -165,7 +167,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -162,7 +164,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
      {
          if ( packet.packet == null )
          {
@@ -273,7 +273,7 @@ index 6429aa9c..cc7c34d5 100644
          }
      }
  
-@@ -404,6 +406,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -386,6 +388,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              handshake.setHost( split[0] );
              extraDataInHandshake = "\0" + split[1];
          }
@@ -281,7 +281,7 @@ index 6429aa9c..cc7c34d5 100644
  
          // SRV records can end with a . depending on DNS / client.
          if ( handshake.getHost().endsWith( "." ) )
-@@ -490,7 +493,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -472,7 +475,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                  }
                  break;
              default:
@@ -290,7 +290,7 @@ index 6429aa9c..cc7c34d5 100644
          }
      }
  
-@@ -918,4 +921,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -900,4 +903,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              brandMessage = input;
          }
      }

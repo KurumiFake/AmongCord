@@ -5,7 +5,7 @@ Subject: [PATCH] modify default config
 
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-index 8c93263b..b0c6c07d 100644
+index d2ab734b..37a19613 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 @@ -34,7 +34,7 @@ public class FlameCordConfiguration extends FlameConfig {

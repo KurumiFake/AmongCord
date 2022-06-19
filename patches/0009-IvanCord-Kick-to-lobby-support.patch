@@ -6,10 +6,10 @@ Subject: [PATCH] (IvanCord) Kick to lobby support
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
-index abcf06bb..ae9540ce 100644
+index 37dd21e8..10c12b8b 100644
 --- a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
 +++ b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
-@@ -272,4 +272,15 @@ public interface ProxyConfig
+@@ -277,4 +277,15 @@ public interface ProxyConfig
       * @return the configured limit
       */
      int getPluginChannelNameLimit();
@@ -74,10 +74,10 @@ index 06d74844..238bc3c1 100644
      }
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-index 194ada04..17109466 100644
+index 97c4b210..31ac791d 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-@@ -30,6 +30,7 @@ import net.md_5.bungee.ServerConnection.KeepAliveData;
+@@ -29,6 +29,7 @@ import net.md_5.bungee.ServerConnection.KeepAliveData;
  import net.md_5.bungee.UserConnection;
  import net.md_5.bungee.Util;
  import net.md_5.bungee.api.ProxyServer;
@@ -85,7 +85,7 @@ index 194ada04..17109466 100644
  import net.md_5.bungee.api.chat.BaseComponent;
  import net.md_5.bungee.api.chat.TextComponent;
  import net.md_5.bungee.api.config.ServerInfo;
-@@ -599,14 +600,46 @@ public class DownstreamBridge extends PacketHandler
+@@ -594,14 +595,46 @@ public class DownstreamBridge extends PacketHandler
          {
              def = null;
          }
