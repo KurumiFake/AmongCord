@@ -163,7 +163,7 @@ index fd09b6d4..1d6cc7df 100644
  
              con.disconnect( bungee.getTranslation( "antibot_password", checkManager.getPasswordCheck().getRepeatCount() ) );
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
-index 0e6741db..3f96b5d6 100644
+index 05a23a12..dd4faaeb 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/PipelineUtils.java
 @@ -64,7 +64,7 @@ public class PipelineUtils
@@ -175,7 +175,7 @@ index 0e6741db..3f96b5d6 100644
                  }
  
                  ch.close();
-@@ -149,11 +149,11 @@ public class PipelineUtils
+@@ -148,11 +148,11 @@ public class PipelineUtils
      {
          if ( !PlatformDependent.isWindows() && Boolean.parseBoolean( System.getProperty( "bungee.epoll", "true" ) ) )
          {

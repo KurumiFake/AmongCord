@@ -90,10 +90,10 @@ index e2e34a34..b3f96f82 100644
      }
  }
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-index 3992f521..e1852173 100644
+index 074d2437..4324a266 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/MinecraftDecoder.java
-@@ -64,6 +64,13 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -65,6 +65,13 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              // Waterfall end
  
              int packetId = DefinedPacket.readVarInt( in );
@@ -107,7 +107,7 @@ index 3992f521..e1852173 100644
              packetTypeInfo = packetId;
              // FlameCord Start - Check if packetId is invalid.
              if (packetId < 0 || packetId > Protocol.MAX_PACKET_ID)
-@@ -76,7 +83,18 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -77,7 +84,18 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
              {
                  packetTypeInfo = packet.getClass();
                  doLengthSanityChecks(in, packet, prot.getDirection(), packetId); // Waterfall: Additional DoS mitigations
@@ -126,7 +126,7 @@ index 3992f521..e1852173 100644
  
                  if ( in.isReadable() )
                  {
-@@ -85,7 +103,14 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
+@@ -86,7 +104,14 @@ public class MinecraftDecoder extends MessageToMessageDecoder<ByteBuf>
                          throw PACKET_NOT_READ_TO_END;
                      }
                      // Waterfall end
