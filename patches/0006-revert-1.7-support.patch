@@ -1067,7 +1067,7 @@ index cb98a8ea..c0f1896e 100644
                  throw CancelSendSignal.INSTANCE;
              }
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 64d947e7..238995e5 100644
+index 38ae21c2..7e0a8500 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -197,8 +197,6 @@ public final class UserConnection implements ProxiedPlayer
@@ -1079,7 +1079,7 @@ index 64d947e7..238995e5 100644
          displayName = name;
      }
  
-@@ -550,7 +548,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -548,7 +546,7 @@ public final class UserConnection implements ProxiedPlayer
          // transform score components
          message = ChatComponentTransformer.getInstance().transform( this, true, message );
  
@@ -1088,7 +1088,7 @@ index 64d947e7..238995e5 100644
          {
              // Versions older than 1.11 cannot send the Action bar with the new JSON formattings
              // Fix by converting to a legacy message, see https://bugs.mojang.com/browse/MC-119145
-@@ -746,7 +744,6 @@ public final class UserConnection implements ProxiedPlayer
+@@ -744,7 +742,6 @@ public final class UserConnection implements ProxiedPlayer
      @Override
      public void setTabHeader(BaseComponent header, BaseComponent footer)
      {
@@ -1096,7 +1096,7 @@ index 64d947e7..238995e5 100644
          header = ChatComponentTransformer.getInstance().transform( this, true, header )[0];
          footer = ChatComponentTransformer.getInstance().transform( this, true, footer )[0];
  
-@@ -759,7 +756,6 @@ public final class UserConnection implements ProxiedPlayer
+@@ -757,7 +754,6 @@ public final class UserConnection implements ProxiedPlayer
      @Override
      public void setTabHeader(BaseComponent[] header, BaseComponent[] footer)
      {
@@ -1104,7 +1104,7 @@ index 64d947e7..238995e5 100644
          header = ChatComponentTransformer.getInstance().transform( this, true, header );
          footer = ChatComponentTransformer.getInstance().transform( this, true, footer );
  
-@@ -789,7 +785,6 @@ public final class UserConnection implements ProxiedPlayer
+@@ -787,7 +783,6 @@ public final class UserConnection implements ProxiedPlayer
  
      public void setCompressionThreshold(int compressionThreshold)
      {

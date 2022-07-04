@@ -236,10 +236,10 @@ index 35d53325..25c321a1 100644
                  {
                      @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 238995e5..4498a8e9 100644
+index 7e0a8500..d567f610 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -402,7 +402,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -400,7 +400,7 @@ public final class UserConnection implements ProxiedPlayer
              }
          };
          Bootstrap b = new Bootstrap()

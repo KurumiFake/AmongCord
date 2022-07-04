@@ -70,10 +70,10 @@ index 663bddec..32e89105 100644
              </PatternLayout>
              <Policies>
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 5cc4824b..873a46e9 100644
+index 761382e7..d9fbb79d 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-@@ -451,7 +451,7 @@ public final class UserConnection implements ProxiedPlayer
+@@ -449,7 +449,7 @@ public final class UserConnection implements ProxiedPlayer
      {
          if ( !ch.isClosing() )
          {
