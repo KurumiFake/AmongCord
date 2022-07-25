@@ -21,7 +21,7 @@ if [ ! -z "$1" ]; then
     disclaimer="$@"
 fi
 
-log="${UP_LOG_PREFIX}Updated Upstream ($updated)\n\n${disclaimer}${logsuffix}"
+log="${UP_LOG_PREFIX}update pstream ($updated)\n\n${disclaimer}${logsuffix}"
 
 echo -e "$log" | git commit -F -
 

@@ -83,10 +83,10 @@ index 761382e7..d9fbb79d 100644
                  getName(), BaseComponent.toLegacyText( reason )
              } );
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 20327f43..edcad1dd 100644
+index 8cc237a6..42ddc740 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-@@ -439,7 +439,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -459,7 +459,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                  {
                      if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotRatelimitLog() )
                      {
@@ -95,7 +95,7 @@ index 20327f43..edcad1dd 100644
                      }
  
                      disconnect( bungee.getTranslation( "antibot_ratelimit", addressData.getPingsSecond() ) );
-@@ -465,7 +465,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -485,7 +485,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                  {
                      if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotRatelimitLog() )
                      {
@@ -104,7 +104,7 @@ index 20327f43..edcad1dd 100644
                      }
  
                      disconnect( bungee.getTranslation( "antibot_ratelimit", addressData.getConnectionsSecond() ) );
-@@ -544,7 +544,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -564,7 +564,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          {
              if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotAccountsLog() )
              {
@@ -113,7 +113,7 @@ index 20327f43..edcad1dd 100644
              }
  
              disconnect( bungee.getTranslation( "antibot_accounts", addressData.getNicknames().size() ) );
-@@ -555,7 +555,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -575,7 +575,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          {
              if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotNicknameLog() )
              {
@@ -122,7 +122,7 @@ index 20327f43..edcad1dd 100644
              }
  
              disconnect( bungee.getTranslation( "antibot_nickname", loginRequest.getData() ) );
-@@ -566,7 +566,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -586,7 +586,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          {
              if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotReconnectLog() )
              {
@@ -131,7 +131,7 @@ index 20327f43..edcad1dd 100644
              }
  
              disconnect( bungee.getTranslation( "antibot_reconnect", FlameCord.getInstance().getFlameCordConfiguration().getAntibotReconnectAttempts() - addressData.getTotalConnections() ) );
-@@ -577,7 +577,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -597,7 +597,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          {
              if ( FlameCord.getInstance().getFlameCordConfiguration().isAntibotCountryLog() )
              {

@@ -31,10 +31,10 @@ index 9838f5c5..a4e6ad09 100644
              return;
          }
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-index 31631626..8c93263b 100644
+index 628f81d0..6a2919a7 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-@@ -184,7 +184,7 @@ public class FlameCordConfiguration extends FlameConfig {
+@@ -187,7 +187,7 @@ public class FlameCordConfiguration extends FlameConfig {
      @Getter
      private boolean protocolEnabled = false;
      @Getter
@@ -57,7 +57,7 @@ index 49dce84b..89898144 100644
      }
  
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index e564458f..ee5cc7c7 100644
+index 05a7b726..7d8f20f9 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -207,7 +207,7 @@ public class BungeeCord extends ProxyServer

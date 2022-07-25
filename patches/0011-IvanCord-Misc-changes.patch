@@ -5,7 +5,7 @@ Subject: [PATCH] (IvanCord) Misc changes
 
 
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index 4498a8e9..5cc4824b 100644
+index d567f610..761382e7 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -329,6 +329,7 @@ public final class UserConnection implements ProxiedPlayer
@@ -25,13 +25,13 @@ index 4498a8e9..5cc4824b 100644
              return;
          }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 379fa7dc..20327f43 100644
+index cc0a9e8c..8cc237a6 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-@@ -202,7 +202,18 @@ public class InitialHandler extends PacketHandler implements PendingConnection
-                 }
+@@ -212,7 +212,18 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+                         }
  
-                 ServerPing legacy = result.getResponse();
+                         ServerPing legacy = result.getResponse();
 -
 +                // IvanCord start - handle null legacy.getPlayers()
 +                // such behavior is handled by modern pinging, yet it is not for

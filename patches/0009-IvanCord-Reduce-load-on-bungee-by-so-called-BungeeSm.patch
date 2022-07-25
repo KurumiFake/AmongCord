@@ -9,7 +9,7 @@ Co-Authored by: MrIvanPlays <ivan@mrivanplays.com> - ported to IvanCord
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/pom.xml b/pom.xml
-index b01ef500..5a667a1e 100644
+index b3c394c2..e8f96ef2 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -64,6 +64,7 @@
@@ -188,7 +188,7 @@ index 8d7a612e..441d74de 100644
  
      <!-- Waterfall start - copy license files into jar -->
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 19b858a1..99f0384d 100644
+index 7b636cb6..a38cb1bc 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -372,7 +372,7 @@ public class BungeeCord extends ProxyServer
@@ -249,10 +249,10 @@ index 7e0a8500..d567f610 100644
                  .handler( initializer )
                  .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, request.getConnectTimeout() )
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 92288714..379fa7dc 100644
+index e26be3e2..cc0a9e8c 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-@@ -151,9 +151,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -150,9 +150,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
          if ( canSendKickMessage() )
          {
              disconnect( ChatColor.RED + Util.exception( t ) );
@@ -264,7 +264,7 @@ index 92288714..379fa7dc 100644
          }
      }
  
-@@ -162,7 +164,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -161,7 +163,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
      {
          if ( packet.packet == null )
          {
@@ -273,7 +273,7 @@ index 92288714..379fa7dc 100644
          }
      }
  
-@@ -386,6 +388,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -406,6 +408,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              handshake.setHost( split[0] );
              extraDataInHandshake = "\0" + split[1];
          }
@@ -281,7 +281,7 @@ index 92288714..379fa7dc 100644
  
          // SRV records can end with a . depending on DNS / client.
          if ( handshake.getHost().endsWith( "." ) )
-@@ -472,7 +475,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -492,7 +495,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                  }
                  break;
              default:
@@ -290,7 +290,7 @@ index 92288714..379fa7dc 100644
          }
      }
  
-@@ -900,4 +903,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -920,4 +923,11 @@ public class InitialHandler extends PacketHandler implements PendingConnection
              brandMessage = input;
          }
      }
@@ -352,10 +352,10 @@ index 606866a5..65f00283 100644
      {
          if ( !closed )
 diff --git a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
-index c737482e..794ad97a 100644
+index 423ae995..ea97ead6 100644
 --- a/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
 +++ b/proxy/src/main/java/net/md_5/bungee/netty/HandlerBoss.java
-@@ -29,6 +29,11 @@ import net.md_5.bungee.util.QuietException;
+@@ -31,6 +31,11 @@ import net.md_5.bungee.util.QuietException;
  public class HandlerBoss extends ChannelInboundHandlerAdapter
  {
  
@@ -367,7 +367,7 @@ index c737482e..794ad97a 100644
      private ChannelWrapper channel;
      private PacketHandler handler;
  
-@@ -150,6 +155,22 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+@@ -152,6 +157,22 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
      {
          if ( ctx.channel().isActive() )
          {
@@ -390,7 +390,7 @@ index c737482e..794ad97a 100644
              boolean logExceptions = !( handler instanceof PingHandler );
  
              // Flamecord start - Antibot System
-@@ -187,6 +208,14 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+@@ -198,6 +219,14 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
                          {
                              handler, cause.getCause().getMessage()
                          } );
@@ -405,7 +405,7 @@ index c737482e..794ad97a 100644
                      } else
                      {
                          ProxyServer.getInstance().getLogger().log( Level.WARNING, "{0} - could not decode packet! {1}", new Object[]
-@@ -223,7 +252,7 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
+@@ -234,7 +263,7 @@ public class HandlerBoss extends ChannelInboundHandlerAdapter
                  }
              }
  

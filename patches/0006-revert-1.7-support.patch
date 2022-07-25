@@ -6,10 +6,10 @@ Subject: [PATCH] revert 1.7 support
 - why
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-index 8c93263b..d2ab734b 100644
+index 6a2919a7..e82de5af 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-@@ -184,7 +184,7 @@ public class FlameCordConfiguration extends FlameConfig {
+@@ -187,7 +187,7 @@ public class FlameCordConfiguration extends FlameConfig {
      @Getter
      private boolean protocolEnabled = false;
      @Getter
@@ -929,7 +929,7 @@ index 09dc67f9..a5555f6a 100644
          buf.writeByte( mode );
          if ( mode == 0 || mode == 2 )
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index f3dd0108..ffb10f92 100644
+index 7d8f20f9..01d97824 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -181,14 +181,6 @@ public class BungeeCord extends ProxyServer
@@ -1182,7 +1182,7 @@ index 6082d40c..97c4b210 100644
              con.unsafe().sendPacket( pluginMessage );
              throw CancelSendSignal.INSTANCE;
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index 6429aa9c..92288714 100644
+index 4c26462c..e26be3e2 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 @@ -3,9 +3,6 @@ package net.md_5.bungee.connection;
@@ -1195,7 +1195,7 @@ index 6429aa9c..92288714 100644
  import java.math.BigInteger;
  import java.net.InetSocketAddress;
  import java.net.SocketAddress;
-@@ -286,23 +283,8 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -306,23 +303,8 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                              return;
                          }
  
