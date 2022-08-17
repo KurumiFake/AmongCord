@@ -6,13 +6,15 @@ Subject: [PATCH] (IvanCord) Configurable brand
 Original code from https://github.com/MrIvanPlays/IvanCord/, licensed under MIT
 
 diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
-index 10c12b8b..5078a1e2 100644
+index 37dd21e8..bb45a5c5 100644
 --- a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
 +++ b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
-@@ -287,5 +287,12 @@ public interface ProxyConfig
-      * @return should the player kicked be transferred to lobby
+@@ -277,4 +277,14 @@ public interface ProxyConfig
+      * @return the configured limit
       */
-     boolean isKickToLobby();
+     int getPluginChannelNameLimit();
++
++    // IvanCord start
 +
 +    /**
 +     * Returns the brand proxy will send to the client.
@@ -20,30 +22,30 @@ index 10c12b8b..5078a1e2 100644
 +     * @return brand
 +     */
 +    String getBrand();
-     // IvanCord end
++    // IvanCord end
  }
 diff --git a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
-index 238bc3c1..c3934d73 100644
+index 06d74844..efff69e4 100644
 --- a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
 +++ b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
-@@ -11,6 +11,7 @@ public class IvanCordConfiguration extends WaterfallConfiguration
+@@ -8,11 +8,15 @@ import net.md_5.bungee.conf.YamlConfig;
+ public class IvanCordConfiguration extends WaterfallConfiguration
  {
  
-     private boolean kickToLobby = true;
 +    private String brand = "AmongCord"; // AmongCord
- 
++
      @Override
      public void load()
-@@ -19,5 +20,7 @@ public class IvanCordConfiguration extends WaterfallConfiguration
+     {
+         super.load();
          YamlConfig config = new YamlConfig( new File( "ivancord.yml" ) );
          config.load( false );
-         kickToLobby = config.getBoolean( "kick_to_lobby", kickToLobby );
 +        brand = config.getString( "brand", brand );
      }
 +
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
-index c0f1896e..8ae01058 100644
+index 054769cf..09a9a547 100644
 --- a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 +++ b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 @@ -284,7 +284,7 @@ public class ServerConnector extends PacketHandler
@@ -56,7 +58,7 @@ index c0f1896e..8ae01058 100644
                  brand.release();
              }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-index 31ac791d..c22267cc 100644
+index 59d204ce..058c6f13 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 @@ -300,7 +300,7 @@ public class DownstreamBridge extends PacketHandler

@@ -25,10 +25,10 @@ index d567f610..761382e7 100644
              return;
          }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-index cc0a9e8c..8cc237a6 100644
+index 8babc71a..bc502fd0 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/InitialHandler.java
-@@ -212,7 +212,18 @@ public class InitialHandler extends PacketHandler implements PendingConnection
+@@ -213,7 +213,18 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                          }
  
                          ServerPing legacy = result.getResponse();

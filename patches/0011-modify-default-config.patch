@@ -5,7 +5,7 @@ Subject: [PATCH] modify default config
 
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
-index d2ab734b..37a19613 100644
+index 76bec099..9fe96535 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/FlameCordConfiguration.java
 @@ -34,7 +34,7 @@ public class FlameCordConfiguration extends FlameConfig {
@@ -15,23 +15,10 @@ index d2ab734b..37a19613 100644
 -    private Collection<String> antibotCountryBlacklist = Arrays.asList("CN", "HK", "RU", "IN", "TH", "ID", "DZ", "VN", "IR", "PK");
 +    private Collection<String> antibotCountryBlacklist = Arrays.asList("CN", "HK", "RU", "IN", "TH", "ID", "DZ", "IR", "PK");
      @Getter
-     private boolean antibotCountryLog = true;
+     private Collection<String> antibotFirewalledExceptions = Arrays.asList("BadPacketException", "QuietException", "IllegalStateConfig", "FastException");
      @Getter
-diff --git a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
-index c3934d73..3ef6a379 100644
---- a/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
-+++ b/proxy/src/main/java/com/mrivanplays/ivancord/conf/IvanCordConfiguration.java
-@@ -10,7 +10,7 @@ import net.md_5.bungee.conf.YamlConfig;
- public class IvanCordConfiguration extends WaterfallConfiguration
- {
- 
--    private boolean kickToLobby = true;
-+    private boolean kickToLobby = false; // AmongCord
-     private String brand = "AmongCord"; // AmongCord
- 
-     @Override
 diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
-index ae4c7ac2..f99e0bc3 100644
+index e8232c0b..a48191ed 100644
 --- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 +++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
 @@ -114,7 +114,7 @@ public class YamlConfig implements ConfigurationAdapter

@@ -1,9 +1,9 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
-Date: Sun, 19 Jun 2022 20:02:48 +0700
+Date: Wed, 17 Aug 2022 09:06:19 +0700
 Subject: [PATCH] Revert "Disable entity Metadata Rewrite"
 
-aint this alr toggleable?
+This reverts commit 9cef292ef5585a7396188deadde161138af6b5d6.
 
 diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
 index abcf06bb..37dd21e8 100644
@@ -22,7 +22,7 @@ index abcf06bb..37dd21e8 100644
       * Whether tablist rewriting should be disabled or not
       * @return {@code true} if tablist rewriting is disabled, {@code false} otherwise
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/AbstractPacketHandler.java b/protocol/src/main/java/net/md_5/bungee/protocol/AbstractPacketHandler.java
-index 35236382..558d0dbb 100644
+index 608769eb..1defe650 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/AbstractPacketHandler.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/AbstractPacketHandler.java
 @@ -10,6 +10,8 @@ import net.md_5.bungee.protocol.packet.ClientStatus;
@@ -35,7 +35,7 @@ index 35236382..558d0dbb 100644
  import net.md_5.bungee.protocol.packet.GameState;
  import net.md_5.bungee.protocol.packet.Handshake;
 @@ -213,4 +215,14 @@ public abstract class AbstractPacketHandler
-     public void handle(GameState gameState) throws Exception
+     public void handle(ServerData serverData) throws Exception
      {
      }
 +
@@ -50,7 +50,7 @@ index 35236382..558d0dbb 100644
 +    // Waterfall end
  }
 diff --git a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
-index d19b67ae..0d1cbbdb 100644
+index e10074f2..d94c2cdf 100644
 --- a/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
 +++ b/protocol/src/main/java/net/md_5/bungee/protocol/Protocol.java
 @@ -22,6 +22,8 @@ import net.md_5.bungee.protocol.packet.EncryptionRequest;
@@ -62,9 +62,9 @@ index d19b67ae..0d1cbbdb 100644
  import net.md_5.bungee.protocol.packet.Handshake;
  import net.md_5.bungee.protocol.packet.KeepAlive;
  import net.md_5.bungee.protocol.packet.Kick;
-@@ -135,6 +137,20 @@ public enum Protocol
-                     PlayerChat::new,
-                     map( ProtocolConstants.MINECRAFT_1_19, 0x30 )
+@@ -133,6 +135,20 @@ public enum Protocol
+                     map( ProtocolConstants.MINECRAFT_1_17, 0x0D ),
+                     map( ProtocolConstants.MINECRAFT_1_19, 0x0A )
              );
 +            // Waterfall start
 +            TO_CLIENT.registerPacket(
@@ -240,7 +240,7 @@ index be337a68..966d2442 100644
      public boolean isDisableTabListRewrite() {
          return disableTabListRewrite;
 diff --git a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
-index c0b42ee2..cb98a8ea 100644
+index a63e67f1..055a1d88 100644
 --- a/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 +++ b/proxy/src/main/java/net/md_5/bungee/ServerConnector.java
 @@ -243,6 +243,11 @@ public class ServerConnector extends PacketHandler
@@ -325,7 +325,7 @@ index c0b42ee2..cb98a8ea 100644
              // Waterfall end
              user.unsafe().sendPacket( new Respawn( login.getDimension(), login.getWorldName(), login.getSeed(), login.getDifficulty(), login.getGameMode(), login.getPreviousGameMode(), login.getLevelType(), login.isDebug(), login.isFlat(), false, login.getDeathLocation() ) );
 diff --git a/proxy/src/main/java/net/md_5/bungee/UserConnection.java b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
-index caac045c..64d947e7 100644
+index ec99ee3a..38ae21c2 100644
 --- a/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 +++ b/proxy/src/main/java/net/md_5/bungee/UserConnection.java
 @@ -44,6 +44,7 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -354,7 +354,7 @@ index caac045c..64d947e7 100644
          this.displayName = name;
  
          tabListHandler = new ServerUnique( this );
-@@ -804,4 +809,10 @@ public final class UserConnection implements ProxiedPlayer
+@@ -802,4 +807,10 @@ public final class UserConnection implements ProxiedPlayer
      {
          return serverSentScoreboard;
      }
@@ -366,7 +366,7 @@ index caac045c..64d947e7 100644
 +    // Waterfall end
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
-index 194ada04..6082d40c 100644
+index d662c976..a7cf0401 100644
 --- a/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 +++ b/proxy/src/main/java/net/md_5/bungee/connection/DownstreamBridge.java
 @@ -46,6 +46,7 @@ import net.md_5.bungee.api.score.Score;
@@ -386,7 +386,7 @@ index 194ada04..6082d40c 100644
  import net.md_5.bungee.protocol.packet.KeepAlive;
  import net.md_5.bungee.protocol.packet.Kick;
  import net.md_5.bungee.protocol.packet.PlayerListItem;
-@@ -144,6 +147,11 @@ public class DownstreamBridge extends PacketHandler
+@@ -145,6 +148,11 @@ public class DownstreamBridge extends PacketHandler
      @Override
      public void handle(PacketWrapper packet) throws Exception
      {
@@ -398,7 +398,7 @@ index 194ada04..6082d40c 100644
          con.sendPacket( packet );
      }
  
-@@ -680,6 +688,34 @@ public class DownstreamBridge extends PacketHandler
+@@ -681,6 +689,34 @@ public class DownstreamBridge extends PacketHandler
          }
      }
  
@@ -459,10 +459,10 @@ index bd6fe2d5..67263bca 100644
      }
 diff --git a/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap.java b/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap.java
 new file mode 100644
-index 00000000..9ec16808
+index 00000000..d4b57e5a
 --- /dev/null
 +++ b/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap.java
-@@ -0,0 +1,369 @@
+@@ -0,0 +1,371 @@
 +package net.md_5.bungee.entitymap;
 +
 +import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -552,6 +552,8 @@ index 00000000..9ec16808
 +                return EntityMap_1_16_2.INSTANCE_1_18;
 +            case ProtocolConstants.MINECRAFT_1_19:
 +                return EntityMap_1_16_2.INSTANCE_1_19;
++            case ProtocolConstants.MINECRAFT_1_19_1:
++                return EntityMap_1_16_2.INSTANCE_1_19_1;
 +        }
 +        throw new RuntimeException( "Version " + version + " has no entity map" );
 +    }
@@ -2357,7 +2359,7 @@ index 00000000..c8b06707
 +}
 diff --git a/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap_1_16_2.java b/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap_1_16_2.java
 new file mode 100644
-index 00000000..b9d0b651
+index 00000000..7241dc56
 --- /dev/null
 +++ b/proxy/src/main/java/net/md_5/bungee/entitymap/EntityMap_1_16_2.java
 @@ -0,0 +1,76 @@
@@ -2381,7 +2383,7 @@ index 00000000..b9d0b651
 +    static final EntityMap_1_16_2 INSTANCE_1_17 = new EntityMap_1_16_2( 0x04, 0x2D );
 +    static final EntityMap_1_16_2 INSTANCE_1_18 = new EntityMap_1_16_2( 0x04, 0x2D );
 +    static final EntityMap_1_16_2 INSTANCE_1_19 = new EntityMap_1_16_2( 0x02, 0x2F );
-+
++    static final EntityMap_1_16_2 INSTANCE_1_19_1 = new EntityMap_1_16_2( 0x02, 0x30 );
 +    //
 +    private final int spawnPlayerId;
 +    private final int spectateId;

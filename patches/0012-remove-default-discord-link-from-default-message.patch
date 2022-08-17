@@ -6,7 +6,7 @@ Subject: [PATCH] remove default discord link from default message
 ...so that ppl wont just go to 2ls's diacord complaining bout random sths...
 
 diff --git a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
-index f994f40e..a641a681 100644
+index f0179062..b26e5172 100644
 --- a/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
 +++ b/flamecord/src/main/java/dev/_2lstudios/flamecord/configuration/MessagesConfiguration.java
 @@ -84,14 +84,14 @@ public class MessagesConfiguration extends FlameConfig {
