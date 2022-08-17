@@ -188,7 +188,7 @@ index 10fe411d..de5a3afa 100644
  
      <!-- Waterfall start - copy license files into jar -->
 diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
-index 8053203e..a464676a 100644
+index 80a850a6..1ef4af1b 100644
 --- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 +++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
 @@ -372,7 +372,7 @@ public class BungeeCord extends ProxyServer
